@@ -3,29 +3,118 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Deals App</title>
+    <title>Pasakili Marriage Proposal</title>
     <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Add CSS styles here for the proposal section */
+        body {
+            font-family: Arial, sans-serif; /* Use a clean font for the body */
+            background-color: #f0f0f0; /* Light gray background */
+            margin: 0; /* Remove default margin */
+            padding: 20px; /* Add padding to body */
+        }
+
+        .header {
+            text-align: center; /* Center align header text */
+            margin-bottom: 20px; /* Space below header */
+        }
+
+        .proposal-container {
+            text-align: center;
+            margin: 40px 0;
+            padding: 20px;
+            background-color: #ffeb3b; /* Light yellow background */
+            border: 3px solid #ffc107; /* Bright yellow border */
+            border-radius: 10px; /* Rounded corners */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Shadow effect */
+        }
+
+        .parrot-image {
+            width: 100px; /* Fixed width for the parrot */
+            height: auto; /* Maintain aspect ratio */
+            margin: 10px; /* Space around each image */
+            animation: flutter 3s infinite; /* Add flutter animation */
+        }
+
+        .love-message {
+            font-size: 2.5em; /* Large text for love message */
+            color: #d32f2f; /* Dark red color */
+            margin-bottom: 10px; /* Space below the message */
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2); /* Soft shadow */
+        }
+
+        .marriage-question {
+            font-size: 1.8em; /* Medium text for marriage question */
+            color: #3e2723; /* Dark brown color */
+            margin-bottom: 20px; /* Space below the question */
+        }
+
+        .proposal-buttons {
+            display: flex; /* Align buttons in a row */
+            justify-content: center; /* Center the buttons */
+            gap: 20px; /* Space between buttons */
+        }
+
+        .proposal-button {
+            background-color: #4caf50; /* Green button */
+            color: white; /* White text */
+            border: none; /* No border */
+            padding: 15px 30px; /* Padding for button */
+            border-radius: 5px; /* Rounded corners */
+            cursor: pointer; /* Pointer cursor on hover */
+            font-size: 1.5em; /* Larger text */
+            transition: background-color 0.3s; /* Smooth transition for hover */
+        }
+
+        .proposal-button:hover {
+            background-color: #388e3c; /* Darker green on hover */
+        }
+
+        /* Flutter animation for the parrot */
+        @keyframes flutter {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+    </style>
 </head>
 <body>
-    <header>
-        <h1>Welcome to Deals App</h1>
-        <p>Your one-stop solution for the best deals!</p>
+    <header class="header">
+        <h1>Welcome to the Pasakili Marriage Proposal!</h1>
     </header>
-
-    <div class="container">
-        <!-- Product Cards here -->
-    </div>
 
     <!-- Proposal Section -->
     <div class="proposal-container">
         <img src="https://i.imgur.com/1yIYOs3.png" alt="Parrot" class="parrot-image">
+        <img src="https://i.imgur.com/4P0NkaP.png" alt="Parrot" class="parrot-image">
+        <img src="https://i.imgur.com/FotfW7v.png" alt="Parrot" class="parrot-image">
         <h2 class="love-message">Pasakili: I Love You!</h2>
         <p class="marriage-question">Will you marry me?</p>
-        <button class="proposal-button">💍 Yes!</button>
+        <div class="proposal-buttons">
+            <button class="proposal-button yes-button">💍 Yes!</button>
+            <button class="proposal-button no-button">❌ No!</button>
+        </div>
     </div>
 
     <footer>
-        <p>© 2024 Deals App</p>
+        <p>© 2024 Pasakili Proposal</p>
     </footer>
+
+    <script>
+        // Function to handle the No button click
+        document.querySelector('.no-button').addEventListener('click', function() {
+            const proposalContainer = document.querySelector('.proposal-container');
+            proposalContainer.style.display = 'none'; // Hide the proposal section
+        });
+
+        // You can add further functionality for the Yes button if needed
+        document.querySelector('.yes-button').addEventListener('click', function() {
+            alert('Yay! 🎉 I\'m so happy!');
+            // Further actions can be added here
+        });
+    </script>
 </body>
 </html>
