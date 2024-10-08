@@ -64,24 +64,11 @@
             cursor: pointer;
             font-size: 1.5em;
             transition: background-color 0.3s;
+            position: relative; /* Position relative for movement */
         }
 
         .proposal-button:hover {
             background-color: #388e3c; /* Darker green on hover */
-        }
-
-        /* Flyaway animation for the No button */
-        @keyframes flyaway {
-            0% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(-50px) rotate(20deg);
-            }
-            100% {
-                transform: translateY(-100vh) rotate(20deg);
-                opacity: 0; /* Fade out */
-            }
         }
 
         /* Flutter animation for the parrot */
@@ -118,14 +105,13 @@
     </footer>
 
     <script>
-        // Function to handle the No button click
+        // Function to handle the No button movement
         const noButton = document.querySelector('.no-button');
         noButton.addEventListener('mouseover', function() {
-            noButton.style.animation = 'flyaway 1s forwards'; // Start flyaway animation
-        });
-
-        noButton.addEventListener('animationend', function() {
-            noButton.style.display = 'none'; // Hide the button after animation
+            // Randomly move the button away from the cursor
+            const xOffset = Math.floor(Math.random() * 200) - 100; // Random X offset
+            const yOffset = Math.floor(Math.random() * 200) - 100; // Random Y offset
+            noButton.style.transform = `translate(${xOffset}px, ${yOffset}px)`; // Move button
         });
 
         // Yes button functionality
