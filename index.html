@@ -3,50 +3,60 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Deals App</title>
     <link rel="stylesheet" href="styles.css">
+    <title>Deals App</title>
 </head>
 <body>
     <header>
-        <h1>Welcome to Deals App</h1>
-        <p>Find the best deals on your favorite products!</p>
+        <div class="logo">Deals App</div>
+        <nav>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
     </header>
     <main>
-        <div class="grid-container">
-            <div class="grid-header">
-                <div class="grid-item">Category</div>
-                <div class="grid-item">Item</div>
-                <div class="grid-item">Price</div>
+        <h1>Latest Amazon Deals</h1>
+        <section class="product-grid">
+            <div class="product-card">
+                <img src="https://via.placeholder.com/200" alt="Product Image">
+                <h2 class="product-name">Product Name 1</h2>
+                <p class="product-category">Category: Electronics</p>
+                <p class="product-price">Price: ₹1999</p>
+                <button class="btn">View Deal</button>
             </div>
-            <div class="grid-row">
-                <div class="grid-item">Electronics</div>
-                <div class="grid-item">Smartphone</div>
-                <div class="grid-item">₹25,000</div>
+            <div class="product-card">
+                <img src="https://via.placeholder.com/200" alt="Product Image">
+                <h2 class="product-name">Product Name 2</h2>
+                <p class="product-category">Category: Clothing</p>
+                <p class="product-price">Price: ₹799</p>
+                <button class="btn">View Deal</button>
             </div>
-            <div class="grid-row">
-                <div class="grid-item">Clothing</div>
-                <div class="grid-item">T-shirt</div>
-                <div class="grid-item">₹500</div>
+            <div class="product-card">
+                <img src="https://via.placeholder.com/200" alt="Product Image">
+                <h2 class="product-name">Product Name 3</h2>
+                <p class="product-category">Category: Home</p>
+                <p class="product-price">Price: ₹1299</p>
+                <button class="btn">View Deal</button>
             </div>
-            <div class="grid-row">
-                <div class="grid-item">Books</div>
-                <div class="grid-item">Fiction Novel</div>
-                <div class="grid-item">₹300</div>
+            <div class="product-card">
+                <img src="https://via.placeholder.com/200" alt="Product Image">
+                <h2 class="product-name">Product Name 4</h2>
+                <p class="product-category">Category: Books</p>
+                <p class="product-price">Price: ₹499</p>
+                <button class="btn">View Deal</button>
             </div>
-            <div class="grid-row">
-                <div class="grid-item">Home Appliances</div>
-                <div class="grid-item">Blender</div>
-                <div class="grid-item">₹3,000</div>
-            </div>
-            <div class="grid-row">
-                <div class="grid-item">Beauty</div>
-                <div class="grid-item">Face Cream</div>
-                <div class="grid-item">₹1,200</div>
-            </div>
-        </div>
+        </section>
     </main>
     <footer>
-        <p>&copy; 2024 Deals App. All rights reserved.</p>
+        <p>© 2024 Deals App | Follow us:</p>
+        <div class="social-links">
+            <a href="#">Facebook</a>
+            <a href="#">Twitter</a>
+            <a href="#">Instagram</a>
+        </div>
     </footer>
 </body>
 </html>
