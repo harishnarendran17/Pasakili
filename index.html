@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Deal Offers Application</title>
+    <title>My Awesome Business Blog</title>
     <link rel="stylesheet" href="styles.css">
     <style>
         /* General Styles */
@@ -11,140 +11,178 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f5f5f5;
+            background-color: #f4f4f4;
         }
 
         header {
-            background-color: #ff9800; /* Orange header */
+            background-color: #343a40; /* Dark gray header */
             color: white;
             text-align: center;
             padding: 20px 0;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
         }
 
+        nav {
+            margin: 10px 0;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: bold;
+        }
+
         .container {
+            display: flex;
             max-width: 1200px;
             margin: 20px auto;
             padding: 20px;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 20px;
         }
 
-        .product-card {
+        .content {
+            flex: 3;
+            margin-right: 20px;
+        }
+
+        .sidebar {
+            flex: 1;
             background-color: white;
-            border: 1px solid #ddd;
+            padding: 15px;
             border-radius: 8px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            width: 300px;
-            text-align: center;
-            overflow: hidden;
-            transition: transform 0.2s;
         }
 
-        .product-card:hover {
-            transform: scale(1.05); /* Scale up on hover */
+        .post {
+            background-color: white;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
 
-        .product-image {
+        .post img {
             width: 100%;
-            height: 200px;
-            object-fit: cover; /* Maintain aspect ratio */
+            border-radius: 8px;
         }
 
-        .product-info {
-            padding: 15px;
-        }
-
-        .product-title {
-            font-size: 1.5em;
-            margin: 10px 0;
+        .post-title {
+            font-size: 1.8em;
             color: #333;
+            margin: 10px 0;
         }
 
-        .product-price {
-            font-size: 1.2em;
-            color: #d32f2f; /* Red color for price */
+        .post-date {
+            color: #777;
+            font-size: 0.9em;
         }
 
-        .product-category {
-            font-size: 1em;
-            color: #888;
-            margin: 5px 0;
+        .post-content {
+            margin: 15px 0;
         }
 
         .button {
-            background-color: #4caf50; /* Green button */
+            background-color: #007bff; /* Blue button */
             color: white;
             border: none;
-            padding: 10px 20px;
+            padding: 10px 15px;
             border-radius: 5px;
             cursor: pointer;
             margin-top: 10px;
             transition: background-color 0.3s;
+            text-decoration: none;
+            display: inline-block;
         }
 
         .button:hover {
-            background-color: #388e3c; /* Darker green on hover */
+            background-color: #0056b3; /* Darker blue on hover */
         }
 
         footer {
             text-align: center;
             padding: 20px 0;
-            background-color: #ff9800; /* Orange footer */
+            background-color: #343a40; /* Dark gray footer */
             color: white;
             position: relative;
             bottom: 0;
             width: 100%;
+            margin-top: 20px;
+        }
+
+        .category-title {
+            font-size: 1.5em;
+            margin-top: 20px;
+            color: #333;
         }
     </style>
 </head>
 <body>
     <header>
-        <h1>Exclusive Deals and Offers</h1>
-        <p>Your one-stop shop for the best online deals!</p>
+        <h1>Welcome to My Awesome Business Blog</h1>
+        <nav>
+            <a href="#">Home</a>
+            <a href="#">About</a>
+            <a href="#">Contact</a>
+        </nav>
     </header>
 
     <div class="container">
-        <!-- Product Card 1 -->
-        <div class="product-card">
-            <img src="https://via.placeholder.com/300x200" alt="Product 1" class="product-image">
-            <div class="product-info">
-                <h2 class="product-title">Product 1</h2>
-                <p class="product-category">Category: Electronics</p>
-                <p class="product-price">$99.99</p>
-                <button class="button">View Offer</button>
+        <div class="content">
+            <h2 class="category-title">Business Insights</h2>
+
+            <!-- Business Blog Post 1 -->
+            <div class="post">
+                <img src="https://via.placeholder.com/800x400" alt="Business Post 1">
+                <h2 class="post-title">Top 5 Business Strategies for Success</h2>
+                <p class="post-date">Published on October 8, 2024</p>
+                <p class="post-content">Discover the key strategies that can help your business thrive in today's competitive market.</p>
+                <a href="#" class="button">Read More</a>
+            </div>
+
+            <!-- Business Blog Post 2 -->
+            <div class="post">
+                <img src="https://via.placeholder.com/800x400" alt="Business Post 2">
+                <h2 class="post-title">The Importance of Networking in Business</h2>
+                <p class="post-date">Published on October 7, 2024</p>
+                <p class="post-content">Learn why networking is crucial for your business growth and how to effectively connect with others.</p>
+                <a href="#" class="button">Read More</a>
+            </div>
+
+            <h2 class="category-title">Stock Market Updates</h2>
+
+            <!-- Stock Blog Post 1 -->
+            <div class="post">
+                <img src="https://via.placeholder.com/800x400" alt="Stock Post 1">
+                <h2 class="post-title">Understanding Stock Market Trends</h2>
+                <p class="post-date">Published on October 6, 2024</p>
+                <p class="post-content">Explore the latest trends in the stock market and what they mean for investors.</p>
+                <a href="#" class="button">Read More</a>
+            </div>
+
+            <!-- Stock Blog Post 2 -->
+            <div class="post">
+                <img src="https://via.placeholder.com/800x400" alt="Stock Post 2">
+                <h2 class="post-title">5 Stocks to Watch This Month</h2>
+                <p class="post-date">Published on October 5, 2024</p>
+                <p class="post-content">Get insights into the top stocks that could make a significant impact on your portfolio.</p>
+                <a href="#" class="button">Read More</a>
             </div>
         </div>
 
-        <!-- Product Card 2 -->
-        <div class="product-card">
-            <img src="https://via.placeholder.com/300x200" alt="Product 2" class="product-image">
-            <div class="product-info">
-                <h2 class="product-title">Product 2</h2>
-                <p class="product-category">Category: Home Appliances</p>
-                <p class="product-price">$149.99</p>
-                <button class="button">View Offer</button>
-            </div>
-        </div>
-
-        <!-- Product Card 3 -->
-        <div class="product-card">
-            <img src="https://via.placeholder.com/300x200" alt="Product 3" class="product-image">
-            <div class="product-info">
-                <h2 class="product-title">Product 3</h2>
-                <p class="product-category">Category: Fashion</p>
-                <p class="product-price">$49.99</p>
-                <button class="button">View Offer</button>
-            </div>
-        </div>
-
-        <!-- Add more product cards as needed -->
+        <aside class="sidebar">
+            <h2>Categories</h2>
+            <ul>
+                <li><a href="#">Business</a></li>
+                <li><a href="#">Stocks</a></li>
+                <li><a href="#">Investing</a></li>
+                <li><a href="#">Finance</a></li>
+                <li><a href="#">Entrepreneurship</a></li>
+            </ul>
+        </aside>
     </div>
 
     <footer>
-        <p>© 2024 Deal Offers Application</p>
+        <p>© 2024 My Awesome Business Blog. All rights reserved.</p>
     </footer>
 </body>
 </html>
