@@ -1,0 +1,60 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #87CEEB; /* Sky blue background */
+    margin: 0;
+}
+
+.parrot {
+    position: relative;
+    width: 100px;
+    height: 200px;
+    background-color: #FFD700; /* Yellow body */
+    border-radius: 50px 50px 30px 30px; /* Rounded shape */
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.wing {
+    position: absolute;
+    width: 80px;
+    height: 50px;
+    background-color: #FF4500; /* Orange wing */
+    border-radius: 50%;
+    top: 50px;
+    left: -20px;
+    transform: rotate(-30deg);
+}
+
+.eye {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background-color: #fff; /* White eye */
+    border-radius: 50%;
+    top: 40px;
+    left: 30px;
+}
+
+.eye::after {
+    content: '';
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background-color: #000; /* Black pupil */
+    border-radius: 50%;
+    top: 5px;
+    left: 5px;
+}
+
+.beak {
+    position: absolute;
+    width: 25px;
+    height: 15px;
+    background-color: #FFA500; /* Orange beak */
+    border-radius: 5px;
+    top: 60px;
+    left: 45px;
+    transform: rotate(30deg);
+}
