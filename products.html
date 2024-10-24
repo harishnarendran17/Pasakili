@@ -9,26 +9,66 @@
 <body>
     <div class="container">
         <h1>Products from Selected Distributor</h1>
-        <h2>Selected Distributor: Distributor1</h2>
+        <script>
+            const params = new URLSearchParams(window.location.search);
+            const distributor = params.get('distributor');
+
+            const products = {
+                Marico: [
+                    { name: "Parachute", price: 100 },
+                    { name: "Nihar", price: 90 },
+                ],
+                Dabur: [
+                    { name: "Dabur Amla", price: 150 },
+                    { name: "Dabur Vatika", price: 140 },
+                ],
+                Colgate: [
+                    { name: "Colgate", price: 50 },
+                    { name: "Colgate Sensitive", price: 60 },
+                ],
+                ITC: [
+                    { name: "Aashirvaad", price: 120 },
+                    { name: "Sunfeast", price: 110 },
+                ],
+                PepsiCo: [
+                    { name: "Pepsi", price: 30 },
+                    { name: "Lay's", price: 20 },
+                ],
+                Godrej: [
+                    { name: "Godrej No. 1", price: 80 },
+                    { name: "Godrej FairGlow", price: 70 },
+                ]
+            };
+        </script>
+
+        <h2>Selected Distributor: <span id="distributorName"></span></h2>
         <form id="productForm">
-            <div class="product">
-                <h3>Product 1</h3>
-                <p>Price: $10</p>
-                <input type="number" id="quantity1" placeholder="Quantity" min="1" required>
-                <button type="button" onclick="addToCart('1')">Add to Cart</button>
-            </div>
-            <div class="product">
-                <h3>Product 2</h3>
-                <p>Price: $15</p>
-                <input type="number" id="quantity2" placeholder="Quantity" min="1" required>
-                <button type="button" onclick="addToCart('2')">Add to Cart</button>
-            </div>
+            <div id="productList"></div>
             <div id="confirmation" class="confirmation" style="display: none;"></div>
         </form>
     </div>
+    
     <script>
-        function addToCart(productNumber) {
-            const quantity = document.getElementById(`quantity${productNumber}`).value;
+        const distributorNameElement = document.getElementById('distributorName');
+        const productListElement = document.getElementById('productList');
+
+        distributorNameElement.textContent = distributor;
+
+        if (products[distributor]) {
+            products[distributor].forEach((product, index) => {
+                productListElement.innerHTML += `
+                    <div class="product">
+                        <h3>${product.name}</h3>
+                        <p>Price: $${product.price}</p>
+                        <input type="number" id="quantity${index + 1}" placeholder="Quantity" min="1" required>
+                        <button type="button" onclick="addToCart('${product.name}', '${product.price}', '${index + 1}')">Add to Cart</button>
+                    </div>
+                `;
+            });
+        }
+
+        function addToCart(productName, price, productIndex) {
+            const quantity = document.getElementById(`quantity${productIndex}`).value;
             const confirmation = document.getElementById('confirmation');
             confirmation.innerText = `Added ${quantity} items to cart!`;
             confirmation.style.display = 'block';
