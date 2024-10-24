@@ -4,8 +4,8 @@ function addToCart(product, quantity) {
     // Add the product and quantity to the cart
     cart.push({ product, quantity });
     
-    // Voice out the product name and the quantity added
-    const message = `${quantity} units of ${product} have been added to your cart.`;
+    // Voice out the quantity added to the cart
+    const message = `${quantity} item(s) have been added to your cart.`;
     alert(message);  // Optional: Display an alert as well
     speak(message);
 }
