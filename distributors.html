@@ -3,13 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Distributor</title>
     <link rel="stylesheet" href="style.css">
-    <title>Distributors</title>
 </head>
 <body>
-    <h1>Available Distributors</h1>
-    <ul id="distributorList">
-        <!-- Distributors will be populated here based on location -->
-    </ul>
+    <header>
+        <h1>Select Distributor</h1>
+    </header>
+    <div class="container">
+        <form id="distributorForm">
+            <label for="distributor">Choose a distributor:</label>
+            <select id="distributor">
+                <option value="distributor1">Distributor 1</option>
+                <option value="distributor2">Distributor 2</option>
+            </select>
+            <button type="submit">View Products</button>
+        </form>
+    </div>
+    <footer class="footer">
+        <p>&copy; 2024 Retailer-Distributor Portal</p>
+    </footer>
+    <script>
+        document.getElementById('distributorForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            window.location.href = 'products.html';
+        });
+    </script>
 </body>
 </html>
