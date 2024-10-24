@@ -1,63 +1,55 @@
 function loginRetailer() {
-    // Logic for retailer login
-    window.location.href = "location.html"; // Redirect to location selection
-}
-
-function loginDistributor() {
-    // Logic for distributor login
-    window.location.href = "distributors.html"; // Redirect to distributors list
+    const retailerId = document.getElementById('retailerId').value;
+    if (retailerId === 'retailer123') {
+        window.location.href = "location.html"; // Redirect to location selection
+    } else {
+        alert('Invalid Retailer ID. Please try again.');
+    }
 }
 
 function showDistributors() {
-    // Mock data for distributors based on location
-    const distributors = {
-        location1: [
-            { name: "Distributor A", brand: "Brand 1" },
-            { name: "Distributor B", brand: "Brand 2" }
-        ],
-        location2: [
-            { name: "Distributor C", brand: "Brand 3" },
-            { name: "Distributor D", brand: "Brand 4" }
-        ]
-    };
+    const locationSelect = document.getElementById('locationSelect');
+    const distributorList = document.getElementById('distributorList');
+    const distributors = document.getElementById('distributors');
 
-    const selectedLocation = document.getElementById('locationSelect').value;
-    const distributorsList = document.getElementById('distributorsList');
+    if (locationSelect.value) {
+        distributorList.style.display = 'block';
+        distributors.innerHTML = ''; // Clear previous list
 
-    if (distributors[selectedLocation]) {
-        distributorsList.innerHTML = '';
-        distributors[selectedLocation].forEach(dist => {
-            const li = document.createElement('li');
-            li.innerHTML = `<a href="#" onclick="showProducts('${dist.brand}')">${dist.name} - ${dist.brand}</a>`;
-            distributorsList.appendChild(li);
-        });
-    }
-}
-
-function showProducts(brand) {
-    // Mock data for products based on distributor's brand
-    const products = {
-        "Brand 1": ["Product A1", "Product A2"],
-        "Brand 2": ["Product B1", "Product B2"],
-        "Brand 3": ["Product C1", "Product C2"],
-        "Brand 4": ["Product D1", "Product D2"]
-    };
-
-    const productsList = document.getElementById('productsList');
-    productsList.innerHTML = '';
-
-    products[brand].forEach(product => {
-        const li = document.createElement('li');
-        li.textContent = product;
-        productsList.appendChild(li);
-    });
-}
-
-function addToCart() {
-    const quantity = document.getElementById('quantity').value;
-    if (quantity > 0) {
-        alert(`Added ${quantity} item(s) to the cart!`);
+        // Example distributors for selected locations
+        if (locationSelect.value === 'location1') {
+            distributors.innerHTML += `<li onclick="showProducts('Distributor A')">Distributor A</li>`;
+            distributors.innerHTML += `<li onclick="showProducts('Distributor B')">Distributor B</li>`;
+        } else if (locationSelect.value === 'location2') {
+            distributors.innerHTML += `<li onclick="showProducts('Distributor C')">Distributor C</li>`;
+            distributors.innerHTML += `<li onclick="showProducts('Distributor D')">Distributor D</li>`;
+        }
     } else {
-        alert('Please enter a valid quantity.');
+        distributorList.style.display = 'none';
     }
+}
+
+function showProducts(distributor) {
+    const productsList = document.getElementById('productsList');
+    productsList.innerHTML = ''; // Clear previous products
+
+    if (distributor === 'Distributor A') {
+        productsList.innerHTML += '<li>Product 1</li>';
+        productsList.innerHTML += '<li>Product 2</li>';
+    } else if (distributor === 'Distributor B') {
+        productsList.innerHTML += '<li>Product 3</li>';
+        productsList.innerHTML += '<li>Product 4</li>';
+    } else if (distributor === 'Distributor C') {
+        productsList.innerHTML += '<li>Product 5</li>';
+        productsList.innerHTML += '<li>Product 6</li>';
+    } else if (distributor === 'Distributor D') {
+        productsList.innerHTML += '<li>Product 7</li>';
+        productsList.innerHTML += '<li>Product 8</li>';
+    }
+
+    window.location.href = 'distributors.html'; // Redirect to products page
+}
+
+function goBack() {
+    window.history.back(); // Go back to the previous page
 }
