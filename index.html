@@ -4,70 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <title>Distributor Product Listing</title>
+    <title>Main Page</title>
 </head>
 <body>
     <header>
-        <h1>ABC Distributors</h1>
+        <h1>Welcome to ABC Distributors</h1>
         <nav>
             <ul>
-                <li><a href="#retailer-login">Retailer Login</a></li>
-                <li><a href="#distributor-login">Distributor Login</a></li>
+                <li><a href="retailer.html">Retailer Login</a></li>
+                <li><a href="distributor.html">Distributor Login</a></li>
             </ul>
         </nav>
     </header>
 
-    <section id="retailer-login">
-        <h2>Retailer Login</h2>
-        <form>
-            <label for="retailer-id">Retailer ID:</label>
-            <input type="text" id="retailer-id" name="retailer-id" required>
-            <button type="submit">Login</button>
-        </form>
-    </section>
-
-    <section id="distributor-login">
-        <h2>Distributor Login</h2>
-        <form>
-            <label for="distributor-id">Distributor ID:</label>
-            <input type="text" id="distributor-id" name="distributor-id" required>
-            <button type="submit">Login</button>
-        </form>
-    </section>
-
-    <section id="products">
-        <h2>Products</h2>
-        <div class="product-category">
-            <h3>Marico Limited</h3>
-            <h4>Hair Care</h4>
-            <ul>
-                <li>
-                    Parachute
-                    <input type="number" min="1" value="1" id="parachute-quantity">
-                    <button onclick="addToCart('Parachute', document.getElementById('parachute-quantity').value)">Add to Cart</button>
-                </li>
-                <li>
-                    Nihar
-                    <input type="number" min="1" value="1" id="nihar-quantity">
-                    <button onclick="addToCart('Nihar', document.getElementById('nihar-quantity').value)">Add to Cart</button>
-                </li>
-            </ul>
-
-            <h4>Foods</h4>
-            <ul>
-                <li>
-                    Saffola
-                    <input type="number" min="1" value="1" id="saffola-quantity">
-                    <button onclick="addToCart('Saffola', document.getElementById('saffola-quantity').value)">Add to Cart</button>
-                </li>
-            </ul>
-        </div>
-    </section>
-
     <footer>
         <p>&copy; 2024 ABC Distributors</p>
     </footer>
-
-    <script src="script.js"></script>
 </body>
 </html>
