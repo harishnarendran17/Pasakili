@@ -3,40 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Available Products</title>
     <link rel="stylesheet" href="style.css">
+    <title>Products</title>
 </head>
 <body>
     <header>
-        <h1>Available Products</h1>
+        <h1>Products</h1>
     </header>
-    <div class="container">
-        <h2>Products List</h2>
-        <div class="product">
-            <h3>Product 1</h3>
-            <p>Price: ₹100</p>
-            <input type="number" id="quantity1" placeholder="Quantity" min="1">
-            <button onclick="addToCart(1)">Add to Cart</button>
+    <main>
+        <div id="products">
+            <h2>Available Products</h2>
+            <div class="product">
+                <h3>Product Name</h3>
+                <p>Price: $10</p>
+                <input type="number" placeholder="Quantity" min="1" id="quantity">
+                <button id="add-to-cart">Add to Cart</button>
+            </div>
+            <!-- Add more products -->
         </div>
-        <div class="product">
-            <h3>Product 2</h3>
-            <p>Price: ₹200</p>
-            <input type="number" id="quantity2" placeholder="Quantity" min="1">
-            <button onclick="addToCart(2)">Add to Cart</button>
-        </div>
-    </div>
-    <footer class="footer">
-        <p>&copy; 2024 Retailer-Distributor Portal</p>
-    </footer>
-    <script>
-        function addToCart(productId) {
-            const quantity = document.getElementById(`quantity${productId}`).value;
-            if (quantity > 0) {
-                alert(`${quantity} item(s) added to cart`);
-            } else {
-                alert('Please enter a valid quantity');
-            }
-        }
-    </script>
+    </main>
+    <script src="script.js"></script>
 </body>
 </html>
