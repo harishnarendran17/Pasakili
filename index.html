@@ -3,123 +3,182 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Retailer Portal</title>
+    <title>Retailer Portal - PK Proposal</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
+        /* General Reset */
+        * {
             margin: 0;
             padding: 0;
-            background-color: #f4f4f4;
+            box-sizing: border-box;
         }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f7f7f7;
+            color: #111;
+            line-height: 1.6;
+        }
+
+        /* Header Styling */
         header {
-            background-color: #4CAF50;
+            background-color: #232f3e;
             padding: 20px;
             text-align: center;
             color: white;
-            font-size: 24px;
         }
-        .login-section, .form-section, .products-section {
-            padding: 20px;
+
+        header h1 {
+            font-size: 2rem;
+        }
+
+        /* Main Content Styling */
+        .container {
+            max-width: 1200px;
             margin: 20px auto;
-            max-width: 600px;
+            padding: 20px;
             background-color: white;
             border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
-        .form-section, .products-section {
-            display: none;
+
+        .login-section, .form-section, .products-section {
+            margin-bottom: 30px;
         }
-        .form-section select, .form-section input {
+
+        h2 {
+            color: #232f3e;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+
+        input, select, button {
             width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            border-radius: 5px;
+            padding: 12px;
+            margin-bottom: 20px;
             border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1rem;
         }
+
         button {
-            padding: 10px 20px;
-            font-size: 16px;
-            color: white;
-            background-color: #4CAF50;
-            border: none;
-            border-radius: 5px;
+            background-color: #f0c14b;
+            color: #111;
             cursor: pointer;
-            width: 100%;
+            border: 1px solid #a88734;
         }
-        .products-section {
-            margin-top: 40px;
+
+        button:hover {
+            background-color: #ddb347;
         }
+
+        /* Product List Styling */
         .products-section ul {
-            list-style-type: none;
-            padding: 0;
+            list-style: none;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
         }
+
         .products-section ul li {
-            background-color: #e0f7fa;
-            padding: 10px;
-            margin: 10px 0;
-            border-radius: 5px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease-in-out;
+            text-align: center;
             cursor: pointer;
         }
+
+        .products-section ul li img {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 10px;
+        }
+
+        .products-section ul li:hover {
+            transform: scale(1.05);
+        }
+
+        /* Footer Styling */
         footer {
             text-align: center;
-            padding: 10px;
-            background-color: #4CAF50;
+            padding: 20px;
+            background-color: #232f3e;
             color: white;
-            position: fixed;
-            width: 100%;
-            bottom: 0;
         }
+
     </style>
 </head>
 <body>
 
 <header>
-    Retailer Portal - Login & Product Selection
+    <h1>Retailer Portal - Product Selection</h1>
 </header>
 
-<div class="login-section">
-    <h2>Retailer Login</h2>
-    <input type="text" id="retailerId" placeholder="Enter Retailer ID">
-    <button onclick="login()">Login</button>
-</div>
+<div class="container">
+    <!-- Retailer Login Section -->
+    <div class="login-section">
+        <h2>Retailer Login</h2>
+        <input type="text" id="retailerId" placeholder="Enter Retailer ID">
+        <button onclick="login()">Login</button>
+    </div>
 
-<div class="form-section">
-    <h2>Select Your Location</h2>
-    <select id="location" onchange="speakText('Location selected: ' + this.value)">
-        <option value="">--Select Location--</option>
-        <option value="New York">New York</option>
-        <option value="Mumbai">Mumbai</option>
-        <option value="Chennai">Chennai</option>
-        <option value="Bangalore">Bangalore</option>
-    </select>
+    <!-- Form Section for Location, Brand, and Distributor Selection -->
+    <div class="form-section" style="display: none;">
+        <h2>Select Your Location</h2>
+        <select id="location" onchange="speakText('Location selected: ' + this.value)">
+            <option value="">--Select Location--</option>
+            <option value="New York">New York</option>
+            <option value="Mumbai">Mumbai</option>
+            <option value="Chennai">Chennai</option>
+            <option value="Bangalore">Bangalore</option>
+        </select>
 
-    <h2>Select a Brand</h2>
-    <select id="brand" onchange="speakText('Brand selected: ' + this.value)">
-        <option value="">--Select Brand--</option>
-        <option value="Brand 1">Brand 1</option>
-        <option value="Brand 2">Brand 2</option>
-        <option value="Brand 3">Brand 3</option>
-        <option value="Brand 4">Brand 4</option>
-    </select>
+        <h2>Select a Brand</h2>
+        <select id="brand" onchange="speakText('Brand selected: ' + this.value)">
+            <option value="">--Select Brand--</option>
+            <option value="Brand 1">Brand 1</option>
+            <option value="Brand 2">Brand 2</option>
+            <option value="Brand 3">Brand 3</option>
+            <option value="Brand 4">Brand 4</option>
+        </select>
 
-    <h2>Select a Distributor for Your Location</h2>
-    <select id="distributor" onchange="speakText('Distributor selected: ' + this.value)">
-        <option value="">--Select Distributor--</option>
-        <option value="Distributor A">Distributor A</option>
-        <option value="Distributor B">Distributor B</option>
-    </select>
+        <h2>Select a Distributor</h2>
+        <select id="distributor" onchange="speakText('Distributor selected: ' + this.value)">
+            <option value="">--Select Distributor--</option>
+            <option value="Distributor A">Distributor A</option>
+            <option value="Distributor B">Distributor B</option>
+        </select>
 
-    <button onclick="showProducts()">Show Products</button>
-</div>
+        <button onclick="showProducts()">Show Products</button>
+    </div>
 
-<div class="products-section">
-    <h2>Available Products</h2>
-    <ul>
-        <li onclick="speakText('Product 1 selected')">Product 1</li>
-        <li onclick="speakText('Product 2 selected')">Product 2</li>
-        <li onclick="speakText('Product 3 selected')">Product 3</li>
-        <li onclick="speakText('Product 4 selected')">Product 4</li>
-    </ul>
+    <!-- Products Section -->
+    <div class="products-section" style="display: none;">
+        <h2>Available Products</h2>
+        <ul>
+            <li onclick="speakText('Product 1 selected')">
+                <img src="https://via.placeholder.com/150" alt="Product 1">
+                <h3>Product 1</h3>
+                <p>Price: $100</p>
+            </li>
+            <li onclick="speakText('Product 2 selected')">
+                <img src="https://via.placeholder.com/150" alt="Product 2">
+                <h3>Product 2</h3>
+                <p>Price: $150</p>
+            </li>
+            <li onclick="speakText('Product 3 selected')">
+                <img src="https://via.placeholder.com/150" alt="Product 3">
+                <h3>Product 3</h3>
+                <p>Price: $200</p>
+            </li>
+            <li onclick="speakText('Product 4 selected')">
+                <img src="https://via.placeholder.com/150" alt="Product 4">
+                <h3>Product 4</h3>
+                <p>Price: $250</p>
+            </li>
+        </ul>
+    </div>
 </div>
 
 <footer>
