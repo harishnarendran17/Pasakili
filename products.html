@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Product Details</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Products from Selected Distributor</h1>
+        <h2>Selected Distributor: Distributor1</h2>
+        <form id="productForm">
+            <div class="product">
+                <h3>Product 1</h3>
+                <p>Price: $10</p>
+                <input type="number" id="quantity1" placeholder="Quantity" min="1" required>
+                <button type="button" onclick="addToCart('1')">Add to Cart</button>
+            </div>
+            <div class="product">
+                <h3>Product 2</h3>
+                <p>Price: $15</p>
+                <input type="number" id="quantity2" placeholder="Quantity" min="1" required>
+                <button type="button" onclick="addToCart('2')">Add to Cart</button>
+            </div>
+            <div id="confirmation" class="confirmation" style="display: none;"></div>
+        </form>
+    </div>
+    <script>
+        function addToCart(productNumber) {
+            const quantity = document.getElementById(`quantity${productNumber}`).value;
+            const confirmation = document.getElementById('confirmation');
+            confirmation.innerText = `Added ${quantity} items to cart!`;
+            confirmation.style.display = 'block';
+            // Add voice confirmation
+            const utterance = new SpeechSynthesisUtterance(`Added ${quantity} items to cart!`);
+            window.speechSynthesis.speak(utterance);
+        }
+    </script>
+</body>
+</html>
