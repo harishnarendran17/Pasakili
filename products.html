@@ -7,21 +7,11 @@
     <title>Products</title>
 </head>
 <body>
-    <header>
+    <div class="container">
         <h1>Products</h1>
-    </header>
-    <main>
-        <div id="products">
-            <h2>Available Products</h2>
-            <div class="product">
-                <h3>Product Name</h3>
-                <p>Price: $10</p>
-                <input type="number" placeholder="Quantity" min="1" id="quantity">
-                <button id="add-to-cart">Add to Cart</button>
-            </div>
-            <!-- Add more products -->
-        </div>
-    </main>
+        <ul id="productsList"></ul>
+        <button onclick="goBack()">Back to Brands</button>
+    </div>
     <script src="script.js"></script>
 </body>
 </html>
