@@ -3,21 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
     <title>Distributor Login</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header>
+    <div class="container">
         <h1>Distributor Login</h1>
-    </header>
-    <main>
-        <form id="distributor-login" onsubmit="return login('distributor')">
-            <label for="distributor-id">Enter your Distributor ID:</label>
-            <input type="text" id="distributor-id" placeholder="e.g., DIST12345" required>
-            <button type="submit">Login</button>
-        </form>
-        <p>Don't have an account? <a href="register_distributor.html">Register here</a></p>
-    </main>
+        <input type="text" id="distributorId" placeholder="Enter Distributor ID" />
+        <button id="distributorLoginButton">Login</button>
+        <div id="error" style="color: red;"></div>
+    </div>
     <script src="script.js"></script>
 </body>
 </html>
