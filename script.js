@@ -1,110 +1,123 @@
-const distributorsData = {
-    location1: {
-        "Marico Limited": {
-            brands: ["Parachute", "Nihar", "Livon"],
-            products: {
-                "Parachute": ["Parachute Coconut Oil", "Parachute Jasmine Oil"],
-                "Nihar": ["Nihar Natural Oil", "Nihar Almond Hair Oil"],
-                "Livon": ["Livon Hair Serum", "Livon Conditioning Oil"],
-            }
-        },
-        "Dabur India Limited": {
-            brands: ["Dabur Amla", "Dabur Vatika"],
-            products: {
-                "Dabur Amla": ["Dabur Amla Hair Oil", "Dabur Amla Shampoo"],
-                "Dabur Vatika": ["Dabur Vatika Hair Oil", "Dabur Vatika Shampoo"],
-            }
-        }
-    },
-    location2: {
-        "ITC Limited": {
-            brands: ["Aashirvaad", "Sunfeast"],
-            products: {
-                "Aashirvaad": ["Aashirvaad Atta", "Aashirvaad Salt"],
-                "Sunfeast": ["Sunfeast Biscuit", "Sunfeast Pasta"],
-            }
-        },
-        "PepsiCo India": {
-            brands: ["Lay's", "Pepsi"],
-            products: {
-                "Lay's": ["Lay's Classic", "Lay's Magic Masala"],
-                "Pepsi": ["Pepsi Regular", "Pepsi Diet"],
-            }
-        }
-    }
+// Retailer IDs with their names
+const retailers = {
+    "custom1234": { name: "Retailer 1" }
 };
 
-function showDistributors() {
-    const locationSelect = document.getElementById('locationSelect');
-    const distributorList = document.getElementById('distributorList');
-    const distributors = document.getElementById('distributors');
-    const brandList = document.getElementById('brandList');
-    const brands = document.getElementById('brands');
+// Sample distributors and their brands based on locations
+const distributors = {
+    "Mumbai": [
+        { name: "Distributor A", brands: ["Parachute", "Nihar"] },
+        { name: "Distributor B", brands: ["Dabur Amla", "Dabur Honey"] }
+    ],
+    "Delhi": [
+        { name: "Distributor C", brands: ["Colgate", "Palmolive"] },
+        { name: "Distributor D", brands: ["ITC", "Bru"] }
+    ],
+    "Bangalore": [
+        { name: "Distributor E", brands: ["Pepsi", "Lay's"] },
+        { name: "Distributor F", brands: ["Godrej Nupur", "Godrej FairGlow"] }
+    ]
+};
 
-    if (locationSelect.value) {
-        distributorList.style.display = 'block';
-        distributors.innerHTML = ''; // Clear previous list
-        brandList.style.display = 'none'; // Hide brand list
+// This will hold the products related to the selected brand
+let products = [];
 
-        const selectedLocation = locationSelect.value;
-        const locationData = distributorsData[selectedLocation];
+// Function to handle retailer login
+function loginRetailer() {
+    // Get the input value for retailer ID
+    const retailerId = document.getElementById('retailerId').value;
 
-        for (const distributor in locationData) {
-            const li = document.createElement('li');
-            li.textContent = distributor;
-            li.onclick = () => showBrands(distributor, selectedLocation);
-            distributors.appendChild(li);
-        }
+    // Check if the retailer ID exists in our retailers object
+    if (retailerId in retailers) {
+        // Redirect to the location selection page
+        window.location.href = "location.html";
     } else {
-        distributorList.style.display = 'none';
-        brandList.style.display = 'none';
+        // Show an error message if the ID is invalid
+        document.getElementById('loginError').innerText = "Invalid Retailer ID!";
     }
 }
 
-function showBrands(distributor, location) {
-    const brandList = document.getElementById('brandList');
-    const brands = document.getElementById('brands');
-    const distributorList = document.getElementById('distributorList');
+// Function to show distributors based on selected location
+function showDistributors() {
+    const location = document.getElementById('locationSelect').value; // Get the selected location
+    const distributorsList = document.getElementById('distributorsList'); // Get the list element
 
-    brandList.style.display = 'block';
-    brands.innerHTML = ''; // Clear previous brands
+    // Clear the previous distributors
+    distributorsList.innerHTML = "";
 
-    const locationData = distributorsData[location][distributor];
-    locationData.brands.forEach(brand => {
-        const li = document.createElement('li');
-        li.textContent = brand;
-        li.onclick = () => showProducts(brand, distributor, location);
-        brands.appendChild(li);
-    });
+    // Check if a location is selected
+    if (location) {
+        // Show the distributors section
+        distributorsList.parentElement.style.display = "block";
 
-    distributorList.style.display = 'none'; // Hide distributor list
+        // Loop through the distributors for the selected location
+        distributors[location].forEach(distributor => {
+            // Create a list item for each distributor
+            const li = document.createElement('li');
+            li.textContent = distributor.name;
+            // Set the click event to show brands for the selected distributor
+            li.onclick = () => showBrands(location, distributor.name);
+            distributorsList.appendChild(li); // Add to the list
+        });
+    } else {
+        // Hide the distributors section if no location is selected
+        distributorsList.parentElement.style.display = "none";
+    }
 }
 
-function showProducts(brand, distributor, location) {
-    const productsList = document.getElementById('productsList');
-    productsList.innerHTML = ''; // Clear previous products
+// Function to show brands of the selected distributor
+function showBrands(location, distributorName) {
+    // Redirect to the distributors page
+    window.location.href = "distributors.html";
+    
+    const brandsList = document.getElementById('distributorBrandsList'); // Get the list element
+    brandsList.innerHTML = ""; // Clear the previous brands
 
-    const locationData = distributorsData[location][distributor];
-    const products = locationData.products[brand];
+    // Find the selected distributor
+    const distributor = distributors[location].find(d => d.name === distributorName);
+    if (distributor) {
+        // Loop through the brands and create a list item for each
+        distributor.brands.forEach(brand => {
+            const li = document.createElement('li');
+            li.textContent = brand;
+            // Set the click event to show products for the selected brand
+            li.onclick = () => showProducts(brand);
+            brandsList.appendChild(li);
+        });
+    }
+}
 
+// Function to show products based on the selected brand
+function showProducts(brand) {
+    // Sample products for demonstration
+    products = [
+        { name: "Product 1 from " + brand, price: 100 },
+        { name: "Product 2 from " + brand, price: 200 },
+        { name: "Product 3 from " + brand, price: 150 }
+    ];
+
+    // Redirect to the products page
+    window.location.href = "products.html";
+    
+    const productsList = document.getElementById('productsList'); // Get the list element
+    productsList.innerHTML = ""; // Clear the previous products
+
+    // Loop through the products and create a list item for each
     products.forEach(product => {
         const li = document.createElement('li');
-        li.textContent = product;
-        const addButton = document.createElement('button');
-        addButton.textContent = 'Add to Cart';
-        addButton.onclick = () => addToCart(product);
-        li.appendChild(addButton);
-        productsList.appendChild(li);
+        li.textContent = `${product.name} - $${product.price}`;
+        productsList.appendChild(li); // Add to the list
     });
-
-    // Redirect to products page
-    window.location.href = 'products.html';
 }
 
-function addToCart(product) {
-    alert(`${product} has been added to your cart!`);
-}
-
-function goBack() {
-    window.history.back(); // Go back to the previous page
+// Function to add selected product to cart
+function addToCart() {
+    const quantity = document.getElementById('productQuantity').value; // Get the quantity
+    if (quantity && quantity > 0) {
+        alert("Added " + quantity + " of " + products[0].name + " to the cart.");
+        // You can implement cart logic here, like saving to localStorage or a server.
+        window.location.href = "cart.html"; // Redirect to the cart page
+    } else {
+        alert("Please enter a valid quantity.");
+    }
 }
