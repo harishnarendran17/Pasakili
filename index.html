@@ -3,186 +3,161 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Awesome Business Blog</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Retailer Portal</title>
     <style>
-        /* General Styles */
         body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
             background-color: #f4f4f4;
         }
-
         header {
-            background-color: #343a40; /* Dark gray header */
-            color: white;
+            background-color: #4CAF50;
+            padding: 20px;
             text-align: center;
-            padding: 20px 0;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-        }
-
-        nav {
-            margin: 10px 0;
-        }
-
-        nav a {
             color: white;
-            text-decoration: none;
-            margin: 0 15px;
-            font-weight: bold;
+            font-size: 24px;
         }
-
-        .container {
-            display: flex;
-            max-width: 1200px;
+        .login-section, .form-section, .products-section {
+            padding: 20px;
             margin: 20px auto;
-            padding: 20px;
-        }
-
-        .content {
-            flex: 3;
-            margin-right: 20px;
-        }
-
-        .sidebar {
-            flex: 1;
-            background-color: white;
-            padding: 15px;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-
-        .post {
+            max-width: 600px;
             background-color: white;
             border-radius: 8px;
-            margin-bottom: 20px;
-            padding: 20px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
-
-        .post img {
+        .form-section, .products-section {
+            display: none;
+        }
+        .form-section select, .form-section input {
             width: 100%;
-            border-radius: 8px;
-        }
-
-        .post-title {
-            font-size: 1.8em;
-            color: #333;
+            padding: 10px;
             margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ccc;
         }
-
-        .post-date {
-            color: #777;
-            font-size: 0.9em;
-        }
-
-        .post-content {
-            margin: 15px 0;
-        }
-
-        .button {
-            background-color: #007bff; /* Blue button */
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
             color: white;
+            background-color: #4CAF50;
             border: none;
-            padding: 10px 15px;
             border-radius: 5px;
             cursor: pointer;
-            margin-top: 10px;
-            transition: background-color 0.3s;
-            text-decoration: none;
-            display: inline-block;
+            width: 100%;
         }
-
-        .button:hover {
-            background-color: #0056b3; /* Darker blue on hover */
+        .products-section {
+            margin-top: 40px;
         }
-
+        .products-section ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .products-section ul li {
+            background-color: #e0f7fa;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            cursor: pointer;
+        }
         footer {
             text-align: center;
-            padding: 20px 0;
-            background-color: #343a40; /* Dark gray footer */
+            padding: 10px;
+            background-color: #4CAF50;
             color: white;
-            position: relative;
-            bottom: 0;
+            position: fixed;
             width: 100%;
-            margin-top: 20px;
-        }
-
-        .category-title {
-            font-size: 1.5em;
-            margin-top: 20px;
-            color: #333;
+            bottom: 0;
         }
     </style>
 </head>
 <body>
-    <header>
-        <h1>Welcome to My Awesome Business Blog</h1>
-        <nav>
-            <a href="#">Home</a>
-            <a href="#">About</a>
-            <a href="#">Contact</a>
-        </nav>
-    </header>
 
-    <div class="container">
-        <div class="content">
-            <h2 class="category-title">Business Insights</h2>
+<header>
+    Retailer Portal - Login & Product Selection
+</header>
 
-            <!-- Business Blog Post 1 -->
-            <div class="post">
-                <img src="https://via.placeholder.com/800x400" alt="Business Post 1">
-                <h2 class="post-title">Top 5 Business Strategies for Success</h2>
-                <p class="post-date">Published on October 8, 2024</p>
-                <p class="post-content">Discover the key strategies that can help your business thrive in today's competitive market.</p>
-                <a href="#" class="button">Read More</a>
-            </div>
+<div class="login-section">
+    <h2>Retailer Login</h2>
+    <input type="text" id="retailerId" placeholder="Enter Retailer ID">
+    <button onclick="login()">Login</button>
+</div>
 
-            <!-- Business Blog Post 2 -->
-            <div class="post">
-                <img src="https://via.placeholder.com/800x400" alt="Business Post 2">
-                <h2 class="post-title">The Importance of Networking in Business</h2>
-                <p class="post-date">Published on October 7, 2024</p>
-                <p class="post-content">Learn why networking is crucial for your business growth and how to effectively connect with others.</p>
-                <a href="#" class="button">Read More</a>
-            </div>
+<div class="form-section">
+    <h2>Select Your Location</h2>
+    <select id="location" onchange="speakText('Location selected: ' + this.value)">
+        <option value="">--Select Location--</option>
+        <option value="New York">New York</option>
+        <option value="Mumbai">Mumbai</option>
+        <option value="Chennai">Chennai</option>
+        <option value="Bangalore">Bangalore</option>
+    </select>
 
-            <h2 class="category-title">Stock Market Updates</h2>
+    <h2>Select a Brand</h2>
+    <select id="brand" onchange="speakText('Brand selected: ' + this.value)">
+        <option value="">--Select Brand--</option>
+        <option value="Brand 1">Brand 1</option>
+        <option value="Brand 2">Brand 2</option>
+        <option value="Brand 3">Brand 3</option>
+        <option value="Brand 4">Brand 4</option>
+    </select>
 
-            <!-- Stock Blog Post 1 -->
-            <div class="post">
-                <img src="https://via.placeholder.com/800x400" alt="Stock Post 1">
-                <h2 class="post-title">Understanding Stock Market Trends</h2>
-                <p class="post-date">Published on October 6, 2024</p>
-                <p class="post-content">Explore the latest trends in the stock market and what they mean for investors.</p>
-                <a href="#" class="button">Read More</a>
-            </div>
+    <h2>Select a Distributor for Your Location</h2>
+    <select id="distributor" onchange="speakText('Distributor selected: ' + this.value)">
+        <option value="">--Select Distributor--</option>
+        <option value="Distributor A">Distributor A</option>
+        <option value="Distributor B">Distributor B</option>
+    </select>
 
-            <!-- Stock Blog Post 2 -->
-            <div class="post">
-                <img src="https://via.placeholder.com/800x400" alt="Stock Post 2">
-                <h2 class="post-title">5 Stocks to Watch This Month</h2>
-                <p class="post-date">Published on October 5, 2024</p>
-                <p class="post-content">Get insights into the top stocks that could make a significant impact on your portfolio.</p>
-                <a href="#" class="button">Read More</a>
-            </div>
-        </div>
+    <button onclick="showProducts()">Show Products</button>
+</div>
 
-        <aside class="sidebar">
-            <h2>Categories</h2>
-            <ul>
-                <li><a href="#">Business</a></li>
-                <li><a href="#">Stocks</a></li>
-                <li><a href="#">Investing</a></li>
-                <li><a href="#">Finance</a></li>
-                <li><a href="#">Entrepreneurship</a></li>
-            </ul>
-        </aside>
-    </div>
+<div class="products-section">
+    <h2>Available Products</h2>
+    <ul>
+        <li onclick="speakText('Product 1 selected')">Product 1</li>
+        <li onclick="speakText('Product 2 selected')">Product 2</li>
+        <li onclick="speakText('Product 3 selected')">Product 3</li>
+        <li onclick="speakText('Product 4 selected')">Product 4</li>
+    </ul>
+</div>
 
-    <footer>
-        <p>© 2024 My Awesome Business Blog. All rights reserved.</p>
-    </footer>
+<footer>
+    © 2024 Retailer-Distributor Portal | Powered by Your Business
+</footer>
+
+<script>
+    function login() {
+        const retailerId = document.getElementById('retailerId').value;
+        if (retailerId) {
+            speakText('Welcome, Retailer ' + retailerId);
+            document.querySelector('.login-section').style.display = 'none';
+            document.querySelector('.form-section').style.display = 'block';
+        } else {
+            alert('Please enter your Retailer ID');
+        }
+    }
+
+    function showProducts() {
+        const location = document.getElementById('location').value;
+        const brand = document.getElementById('brand').value;
+        const distributor = document.getElementById('distributor').value;
+
+        if (location && brand && distributor) {
+            speakText('Showing products for ' + brand + ' from ' + distributor + ' in ' + location);
+            document.querySelector('.form-section').style.display = 'none';
+            document.querySelector('.products-section').style.display = 'block';
+        } else {
+            alert('Please select location, brand, and distributor');
+        }
+    }
+
+    function speakText(text) {
+        const msg = new SpeechSynthesisUtterance(text);
+        msg.lang = 'en-US'; // Change to desired language if needed
+        window.speechSynthesis.speak(msg);
+    }
+</script>
+
 </body>
 </html>
