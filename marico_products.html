@@ -12,15 +12,18 @@
     <ul>
         <li>
             Parachute Hair Oil
-            <button onclick="addToCart('Parachute Hair Oil')">Add to Cart</button>
+            <input type="number" id="parachuteQuantity" value="1" min="1" style="width: 50px;">
+            <button onclick="addToCart('Parachute Hair Oil', document.getElementById('parachuteQuantity').value)">Add to Cart</button>
         </li>
         <li>
             Livon Hair Serum
-            <button onclick="addToCart('Livon Hair Serum')">Add to Cart</button>
+            <input type="number" id="livonQuantity" value="1" min="1" style="width: 50px;">
+            <button onclick="addToCart('Livon Hair Serum', document.getElementById('livonQuantity').value)">Add to Cart</button>
         </li>
         <li>
             Nihar Naturals
-            <button onclick="addToCart('Nihar Naturals')">Add to Cart</button>
+            <input type="number" id="niharQuantity" value="1" min="1" style="width: 50px;">
+            <button onclick="addToCart('Nihar Naturals', document.getElementById('niharQuantity').value)">Add to Cart</button>
         </li>
     </ul>
 
