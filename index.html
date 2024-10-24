@@ -3,76 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Retailer and Distributor Connect</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>PK Deals - Retailer Login</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Login Section -->
-    <header>
-        <h1>Retailer and Distributor Connect</h1>
-        <div class="login-options">
-            <button onclick="login('retailer')">Retailer Login</button>
-            <button onclick="login('distributor')">Distributor Login</button>
-        </div>
-    </header>
-
-    <!-- Retailer Section -->
-    <section id="retailer-section" class="hidden">
-        <h2>Welcome, Retailer</h2>
-        <div class="location-selection">
-            <label for="location">Select Location:</label>
-            <select id="location">
-                <option value="city1">City 1</option>
-                <option value="city2">City 2</option>
-                <option value="city3">City 3</option>
-            </select>
-        </div>
-
-        <div class="distributor-selection">
-            <h3>Select a Distributor</h3>
-            <select id="distributor">
-                <option value="distributor1">Distributor 1</option>
-                <option value="distributor2">Distributor 2</option>
-            </select>
-        </div>
-
-        <div class="product-list">
-            <h3>Brand and Products</h3>
-            <ul>
-                <li>Brand 1
-                    <ul>
-                        <li><button onclick="addToCart('Brand 1 - Product A')">Product A</button></li>
-                        <li><button onclick="addToCart('Brand 1 - Product B')">Product B</button></li>
-                    </ul>
-                </li>
-                <li>Brand 2
-                    <ul>
-                        <li><button onclick="addToCart('Brand 2 - Product A')">Product A</button></li>
-                        <li><button onclick="addToCart('Brand 2 - Product B')">Product B</button></li>
-                    </ul>
-                </li>
-            </ul>
-        </div>
-
-        <div class="cart">
-            <h3>Shopping Cart</h3>
-            <div id="cart-items"></div>
-            <button onclick="checkout()">Checkout</button>
-        </div>
-    </section>
-
-    <!-- Distributor Section -->
-    <section id="distributor-section" class="hidden">
-        <h2>Welcome, Distributor</h2>
-        <div class="orders">
-            <h3>Orders Received</h3>
-            <ul>
-                <li>Order 1 from Retailer A</li>
-                <li>Order 2 from Retailer B</li>
-            </ul>
-        </div>
-    </section>
-
-    <script src="scripts.js"></script>
+    <h1>Welcome to PK Deals</h1>
+    <div class="login-options">
+        <a href="retailer_login.html" class="btn">Retailer Login</a>
+        <a href="#" class="btn">Distributor Login</a>
+    </div>
 </body>
 </html>
