@@ -15,7 +15,7 @@ body {
     text-align: center;
 }
 
-h1 {
+h1, h2 {
     color: #333;
 }
 
@@ -44,16 +44,4 @@ button:hover {
 ul {
     list-style-type: none;
     padding: 0;
-}
-
-li {
-    cursor: pointer;
-    padding: 8px;
-    margin: 5px 0;
-    background-color: #e9ecef;
-    border-radius: 4px;
-}
-
-li:hover {
-    background-color: #d6d8db;
 }
