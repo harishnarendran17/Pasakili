@@ -3,78 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Available Products</title>
     <link rel="stylesheet" href="style.css">
-    <title>Product Details</title>
 </head>
 <body>
+    <header>
+        <h1>Available Products</h1>
+    </header>
     <div class="container">
-        <h1>Products from Selected Distributor</h1>
-        <script>
-            const params = new URLSearchParams(window.location.search);
-            const distributor = params.get('distributor');
-
-            const products = {
-                Marico: [
-                    { name: "Parachute", price: 100 },
-                    { name: "Nihar", price: 90 },
-                ],
-                Dabur: [
-                    { name: "Dabur Amla", price: 150 },
-                    { name: "Dabur Vatika", price: 140 },
-                ],
-                Colgate: [
-                    { name: "Colgate", price: 50 },
-                    { name: "Colgate Sensitive", price: 60 },
-                ],
-                ITC: [
-                    { name: "Aashirvaad", price: 120 },
-                    { name: "Sunfeast", price: 110 },
-                ],
-                PepsiCo: [
-                    { name: "Pepsi", price: 30 },
-                    { name: "Lay's", price: 20 },
-                ],
-                Godrej: [
-                    { name: "Godrej No. 1", price: 80 },
-                    { name: "Godrej FairGlow", price: 70 },
-                ]
-            };
-        </script>
-
-        <h2>Selected Distributor: <span id="distributorName"></span></h2>
-        <form id="productForm">
-            <div id="productList"></div>
-            <div id="confirmation" class="confirmation" style="display: none;"></div>
-        </form>
+        <h2>Products List</h2>
+        <div class="product">
+            <h3>Product 1</h3>
+            <p>Price: ₹100</p>
+            <input type="number" id="quantity1" placeholder="Quantity" min="1">
+            <button onclick="addToCart(1)">Add to Cart</button>
+        </div>
+        <div class="product">
+            <h3>Product 2</h3>
+            <p>Price: ₹200</p>
+            <input type="number" id="quantity2" placeholder="Quantity" min="1">
+            <button onclick="addToCart(2)">Add to Cart</button>
+        </div>
     </div>
-    
+    <footer class="footer">
+        <p>&copy; 2024 Retailer-Distributor Portal</p>
+    </footer>
     <script>
-        const distributorNameElement = document.getElementById('distributorName');
-        const productListElement = document.getElementById('productList');
-
-        distributorNameElement.textContent = distributor;
-
-        if (products[distributor]) {
-            products[distributor].forEach((product, index) => {
-                productListElement.innerHTML += `
-                    <div class="product">
-                        <h3>${product.name}</h3>
-                        <p>Price: $${product.price}</p>
-                        <input type="number" id="quantity${index + 1}" placeholder="Quantity" min="1" required>
-                        <button type="button" onclick="addToCart('${product.name}', '${product.price}', '${index + 1}')">Add to Cart</button>
-                    </div>
-                `;
-            });
-        }
-
-        function addToCart(productName, price, productIndex) {
-            const quantity = document.getElementById(`quantity${productIndex}`).value;
-            const confirmation = document.getElementById('confirmation');
-            confirmation.innerText = `Added ${quantity} items to cart!`;
-            confirmation.style.display = 'block';
-            // Add voice confirmation
-            const utterance = new SpeechSynthesisUtterance(`Added ${quantity} items to cart!`);
-            window.speechSynthesis.speak(utterance);
+        function addToCart(productId) {
+            const quantity = document.getElementById(`quantity${productId}`).value;
+            if (quantity > 0) {
+                alert(`${quantity} item(s) added to cart`);
+            } else {
+                alert('Please enter a valid quantity');
+            }
         }
     </script>
 </body>
