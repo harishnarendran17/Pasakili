@@ -3,14 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
     <title>Retailer Login</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
         <h1>Retailer Login</h1>
-        <input type="text" id="retailerId" placeholder="Enter Retailer ID (e.g., retailer123)">
+        <input type="text" id="retailerId" placeholder="Enter Retailer ID">
         <button onclick="loginRetailer()">Login</button>
+        <p id="loginError" class="error"></p>
     </div>
     <script src="script.js"></script>
 </body>
