@@ -11,10 +11,12 @@
         <h1>Distributor Login</h1>
     </header>
     <main>
-        <form id="distributor-login">
-            <input type="text" placeholder="Distributor ID" required>
+        <form id="distributor-login" onsubmit="return login('distributor')">
+            <label for="distributor-id">Enter your Distributor ID:</label>
+            <input type="text" id="distributor-id" placeholder="e.g., DIST12345" required>
             <button type="submit">Login</button>
         </form>
+        <p>Don't have an account? <a href="register_distributor.html">Register here</a></p>
     </main>
     <script src="script.js"></script>
 </body>
