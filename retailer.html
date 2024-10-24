@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Retailer Login</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Retailer Login</h1>
+        <input type="text" id="retailerId" placeholder="Enter Retailer ID">
+        <button id="retailerLogin">Login</button>
+        <div id="locationDiv" style="display: none;">
+            <h2>Select Location</h2>
+            <select id="locationSelect"></select>
+            <button id="showDistributors">Show Distributors</button>
+        </div>
+        <div id="distributorDiv" style="display: none;">
+            <h2>Distributors</h2>
+            <select id="distributorSelect"></select>
+            <button id="showProducts">Show Products</button>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
