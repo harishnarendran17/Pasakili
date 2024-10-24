@@ -7,17 +7,11 @@
     <title>Retailer Login</title>
 </head>
 <body>
-    <header>
+    <div class="container">
         <h1>Retailer Login</h1>
-    </header>
-    <main>
-        <form id="retailer-login" onsubmit="return login('retailer')">
-            <label for="retailer-id">Enter your Retailer ID:</label>
-            <input type="text" id="retailer-id" placeholder="e.g., RET12345" required>
-            <button type="submit">Login</button>
-        </form>
-        <p>Don't have an account? <a href="register_retailer.html">Register here</a></p>
-    </main>
+        <input type="text" id="retailerId" placeholder="Enter Retailer ID (e.g., retailer123)">
+        <button onclick="loginRetailer()">Login</button>
+    </div>
     <script src="script.js"></script>
 </body>
 </html>
