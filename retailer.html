@@ -1,0 +1,49 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Retailer Page</title>
+</head>
+<body>
+    <header>
+        <h1>Retailer Login</h1>
+    </header>
+
+    <section id="retailer-login">
+        <form id="retailer-form">
+            <label for="retailer-id">Retailer ID:</label>
+            <input type="text" id="retailer-id" name="retailer-id" required>
+            <button type="submit">Login</button>
+        </form>
+    </section>
+
+    <section id="products" style="display: none;">
+        <h2>Available Products</h2>
+        <div class="product-category">
+            <h3>Marico Limited</h3>
+            <h4>Hair Care</h4>
+            <ul>
+                <li>
+                    Parachute
+                    <input type="number" min="1" value="1" id="parachute-quantity">
+                    <button onclick="addToCart('Parachute', document.getElementById('parachute-quantity').value)">Add to Cart</button>
+                </li>
+                <li>
+                    Nihar
+                    <input type="number" min="1" value="1" id="nihar-quantity">
+                    <button onclick="addToCart('Nihar', document.getElementById('nihar-quantity').value)">Add to Cart</button>
+                </li>
+            </ul>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 ABC Distributors</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
