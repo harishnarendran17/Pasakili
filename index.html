@@ -3,68 +3,76 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Retailer-Distributor Platform</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="https://code.responsivevoice.org/responsivevoice.js"></script>
+    <title>Retailer and Distributor Connect</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <!-- Login Section -->
     <header>
-        <h1>Retailer-Distributor Platform</h1>
+        <h1>Retailer and Distributor Connect</h1>
+        <div class="login-options">
+            <button onclick="login('retailer')">Retailer Login</button>
+            <button onclick="login('distributor')">Distributor Login</button>
+        </div>
     </header>
 
-    <div class="login-section">
-        <h2>Login</h2>
-        <button onclick="location.href='retailer.html'">Retailer Login</button>
-        <button onclick="location.href='distributor.html'">Distributor Login</button>
-    </div>
-
-    <!-- Retailer Page -->
-    <div id="retailer-page" class="page">
-        <h2>Retailer Portal</h2>
-        <label for="location">Select Location:</label>
-        <select id="location">
-            <option value="chennai">Chennai</option>
-            <option value="bangalore">Bangalore</option>
-            <option value="mumbai">Mumbai</option>
-        </select>
-
-        <label for="distributor">Select Distributor:</label>
-        <select id="distributor">
-            <option value="distributor1">Distributor 1</option>
-            <option value="distributor2">Distributor 2</option>
-            <option value="distributor3">Distributor 3</option>
-        </select>
-
-        <h3>Brands and Products</h3>
-        <div class="brand">
-            <h4>Brand 1</h4>
-            <button class="add-to-cart" onclick="addToCart('Brand 1', 5)">Add to Cart (5 units)</button>
-        </div>
-        <div class="brand">
-            <h4>Brand 2</h4>
-            <button class="add-to-cart" onclick="addToCart('Brand 2', 3)">Add to Cart (3 units)</button>
+    <!-- Retailer Section -->
+    <section id="retailer-section" class="hidden">
+        <h2>Welcome, Retailer</h2>
+        <div class="location-selection">
+            <label for="location">Select Location:</label>
+            <select id="location">
+                <option value="city1">City 1</option>
+                <option value="city2">City 2</option>
+                <option value="city3">City 3</option>
+            </select>
         </div>
 
-        <button onclick="checkout()">Checkout</button>
-    </div>
+        <div class="distributor-selection">
+            <h3>Select a Distributor</h3>
+            <select id="distributor">
+                <option value="distributor1">Distributor 1</option>
+                <option value="distributor2">Distributor 2</option>
+            </select>
+        </div>
 
-    <!-- Distributor Page -->
-    <div id="distributor-page" class="page">
-        <h2>Distributor Portal</h2>
-        <p>You have received <span id="order-count">5</span> orders today.</p>
-    </div>
+        <div class="product-list">
+            <h3>Brand and Products</h3>
+            <ul>
+                <li>Brand 1
+                    <ul>
+                        <li><button onclick="addToCart('Brand 1 - Product A')">Product A</button></li>
+                        <li><button onclick="addToCart('Brand 1 - Product B')">Product B</button></li>
+                    </ul>
+                </li>
+                <li>Brand 2
+                    <ul>
+                        <li><button onclick="addToCart('Brand 2 - Product A')">Product A</button></li>
+                        <li><button onclick="addToCart('Brand 2 - Product B')">Product B</button></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
 
-    <script>
-        // Voice assistance function for adding items to the cart
-        function addToCart(brand, quantity) {
-            const message = `${quantity} units of ${brand} added to the cart.`;
-            responsiveVoice.speak(message);
-        }
+        <div class="cart">
+            <h3>Shopping Cart</h3>
+            <div id="cart-items"></div>
+            <button onclick="checkout()">Checkout</button>
+        </div>
+    </section>
 
-        // Voice confirmation during checkout
-        function checkout() {
-            responsiveVoice.speak("Are you sure you want to proceed to checkout?");
-        }
-    </script>
+    <!-- Distributor Section -->
+    <section id="distributor-section" class="hidden">
+        <h2>Welcome, Distributor</h2>
+        <div class="orders">
+            <h3>Orders Received</h3>
+            <ul>
+                <li>Order 1 from Retailer A</li>
+                <li>Order 2 from Retailer B</li>
+            </ul>
+        </div>
+    </section>
+
+    <script src="scripts.js"></script>
 </body>
 </html>
