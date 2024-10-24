@@ -1,88 +1,102 @@
-const distributorData = {
-    "Location1": [
-        { name: "Distributor A", brand: ["Parachute", "Nihar"] },
-        { name: "Distributor B", brand: ["Dabur Amla", "Dabur Vatika"] }
-    ],
-    "Location2": [
-        { name: "Distributor C", brand: ["Colgate", "Palmolive"] },
-        { name: "Distributor D", brand: ["Aashirvaad", "Sunfeast"] }
-    ],
-    "Location3": [
-        { name: "Distributor E", brand: ["Pepsi", "Lay's"] },
-        { name: "Distributor F", brand: ["Godrej Nupur", "Godrej Expert"] }
-    ]
-};
+document.addEventListener('DOMContentLoaded', function () {
+    const retailerId = "custom1234"; // Retailer login ID
+    const distributorId = "dist1234"; // Distributor login ID
+    const retailers = ["custom1234"];
+    const distributors = ["dist1234"];
 
-const productData = {
-    "Distributor A": {
-        "Parachute": ["Oil", "Cream"],
-        "Nihar": ["Shampoo", "Conditioner"]
-    },
-    "Distributor B": {
-        "Dabur Amla": ["Oil", "Herbal"],
-        "Dabur Vatika": ["Shampoo", "Hair Mask"]
-    },
-    "Distributor C": {
-        "Colgate": ["Toothpaste", "Toothbrush"],
-        "Palmolive": ["Soap", "Shower Gel"]
-    },
-    "Distributor D": {
-        "Aashirvaad": ["Atta", "Rice"],
-        "Sunfeast": ["Biscuits", "Noodles"]
-    },
-    "Distributor E": {
-        "Pepsi": ["Soft Drink", "Diet Pepsi"],
-        "Lay's": ["Chips", "Snack"]
-    },
-    "Distributor F": {
-        "Godrej Nupur": ["Hair Color", "Henna"],
-        "Godrej Expert": ["Hair Color", "Cream"]
-    }
-};
+    // Retailer login
+    document.getElementById('retailerLoginButton')?.addEventListener('click', function () {
+        const id = document.getElementById('retailerId').value;
+        if (retailers.includes(id)) {
+            window.location.href = 'location.html';
+        } else {
+            document.getElementById('error').innerText = "Invalid Retailer ID!";
+        }
+    });
 
-function loginRetailer() {
-    const retailerID = document.getElementById('retailerID').value;
-    if (retailerID === 'custom1234') {
-        window.location.href = 'location.html';
-    } else {
-        document.getElementById('error').innerText = 'Invalid Retailer ID!';
-    }
-}
+    // Distributor login
+    document.getElementById('distributorLoginButton')?.addEventListener('click', function () {
+        const id = document.getElementById('distributorId').value;
+        if (distributors.includes(id)) {
+            window.location.href = 'distributor_dashboard.html';
+        } else {
+            document.getElementById('error').innerText = "Invalid Distributor ID!";
+        }
+    });
 
-function showDistributors() {
-    const location = document.getElementById('locationSelect').value;
-    const distributorList = document.getElementById('distributorList');
+    // Handling location selection
+    document.getElementById('nextButton')?.addEventListener('click', function () {
+        const selectedLocation = document.getElementById('locationSelect').value;
+        if (selectedLocation) {
+            showDistributors(selectedLocation);
+        }
+    });
 
-    distributorList.innerHTML = '';
-    if (distributorData[location]) {
-        distributorData[location].forEach(distributor => {
-            const button = document.createElement('button');
-            button.innerText = distributor.name;
-            button.onclick = () => showProducts(distributor.name);
-            distributorList.appendChild(button);
+    // Show distributors based on selected location
+    function showDistributors(location) {
+        const distributorList = document.getElementById('distributorList');
+        distributorList.innerHTML = ''; // Clear previous list
+
+        const distributors = {
+            Location1: [
+                { name: "Distributor A", brands: ["Marico", "Dabur"] },
+                { name: "Distributor B", brands: ["Colgate", "ITC"] }
+            ],
+            Location2: [
+                { name: "Distributor C", brands: ["PepsiCo", "Godrej"] },
+                { name: "Distributor D", brands: ["Marico", "Dabur"] }
+            ],
+            Location3: [
+                { name: "Distributor E", brands: ["Colgate", "ITC"] },
+                { name: "Distributor F", brands: ["PepsiCo", "Godrej"] }
+            ]
+        };
+
+        const selectedDistributors = distributors[location] || [];
+        selectedDistributors.forEach(distributor => {
+            const div = document.createElement('div');
+            div.innerHTML = `<strong>${distributor.name}</strong> (${distributor.brands.join(', ')}) <button onclick="showProducts('${distributor.name}', '${location}')">View Products</button>`;
+            distributorList.appendChild(div);
         });
-    } else {
-        distributorList.innerHTML = 'No distributors found.';
     }
-}
 
-function showProducts(distributorName) {
-    const productList = document.getElementById('productList');
-    productList.innerHTML = '';
+    // Show products based on selected distributor and location
+    window.showProducts = function (distributorName, location) {
+        const productList = document.getElementById('productList');
+        productList.innerHTML = ''; // Clear previous list
 
-    if (productData[distributorName]) {
-        Object.keys(productData[distributorName]).forEach(brand => {
-            const brandHeader = document.createElement('h2');
-            brandHeader.innerText = brand;
-            productList.appendChild(brandHeader);
+        const products = {
+            "Distributor A": {
+                "Marico": ["Parachute", "Nihar"],
+                "Dabur": ["Dabur Amla", "Dabur Honey"]
+            },
+            "Distributor B": {
+                "Colgate": ["Colgate Toothpaste", "Colgate Toothbrush"],
+                "ITC": ["Aashirvaad", "Sunfeast"]
+            },
+            "Distributor C": {
+                "PepsiCo": ["Pepsi", "Lays"],
+                "Godrej": ["Godrej Nupur", "Godrej Expert"]
+            },
+            // Add more products for other distributors here...
+        };
 
-            productData[distributorName][brand].forEach(product => {
+        const selectedProducts = products[distributorName] || {};
+        for (const brand in selectedProducts) {
+            const brandDiv = document.createElement('div');
+            brandDiv.innerHTML = `<h3>${brand}</h3>`;
+            selectedProducts[brand].forEach(product => {
                 const productDiv = document.createElement('div');
-                productDiv.innerText = product;
-                productList.appendChild(productDiv);
+                productDiv.innerHTML = `${product} <button onclick="addToCart('${product}')">Add to Cart</button>`;
+                brandDiv.appendChild(productDiv);
             });
-        });
-    } else {
-        productList.innerHTML = 'No products available.';
-    }
-}
+            productList.appendChild(brandDiv);
+        }
+    };
+
+    // Function to add products to cart
+    window.addToCart = function (product) {
+        alert(`${product} has been added to your cart!`);
+        // Add cart functionality here...
+    };
+});
