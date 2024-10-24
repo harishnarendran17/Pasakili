@@ -3,220 +3,68 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Retailer Portal - PK Proposal</title>
-    <style>
-        /* General Reset */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f7f7f7;
-            color: #111;
-            line-height: 1.6;
-        }
-
-        /* Header Styling */
-        header {
-            background-color: #232f3e;
-            padding: 20px;
-            text-align: center;
-            color: white;
-        }
-
-        header h1 {
-            font-size: 2rem;
-        }
-
-        /* Main Content Styling */
-        .container {
-            max-width: 1200px;
-            margin: 20px auto;
-            padding: 20px;
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-
-        .login-section, .form-section, .products-section {
-            margin-bottom: 30px;
-        }
-
-        h2 {
-            color: #232f3e;
-            font-size: 1.5rem;
-            margin-bottom: 20px;
-        }
-
-        input, select, button {
-            width: 100%;
-            padding: 12px;
-            margin-bottom: 20px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            font-size: 1rem;
-        }
-
-        button {
-            background-color: #f0c14b;
-            color: #111;
-            cursor: pointer;
-            border: 1px solid #a88734;
-        }
-
-        button:hover {
-            background-color: #ddb347;
-        }
-
-        /* Product List Styling */
-        .products-section ul {
-            list-style: none;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-        }
-
-        .products-section ul li {
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-            transition: transform 0.2s ease-in-out;
-            text-align: center;
-            cursor: pointer;
-        }
-
-        .products-section ul li img {
-            max-width: 100%;
-            height: auto;
-            margin-bottom: 10px;
-        }
-
-        .products-section ul li:hover {
-            transform: scale(1.05);
-        }
-
-        /* Footer Styling */
-        footer {
-            text-align: center;
-            padding: 20px;
-            background-color: #232f3e;
-            color: white;
-        }
-
-    </style>
+    <title>Retailer-Distributor Platform</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://code.responsivevoice.org/responsivevoice.js"></script>
 </head>
 <body>
+    <header>
+        <h1>Retailer-Distributor Platform</h1>
+    </header>
 
-<header>
-    <h1>Retailer Portal - Product Selection</h1>
-</header>
-
-<div class="container">
-    <!-- Retailer Login Section -->
     <div class="login-section">
-        <h2>Retailer Login</h2>
-        <input type="text" id="retailerId" placeholder="Enter Retailer ID">
-        <button onclick="login()">Login</button>
+        <h2>Login</h2>
+        <button onclick="location.href='retailer.html'">Retailer Login</button>
+        <button onclick="location.href='distributor.html'">Distributor Login</button>
     </div>
 
-    <!-- Form Section for Location, Brand, and Distributor Selection -->
-    <div class="form-section" style="display: none;">
-        <h2>Select Your Location</h2>
-        <select id="location" onchange="speakText('Location selected: ' + this.value)">
-            <option value="">--Select Location--</option>
-            <option value="New York">New York</option>
-            <option value="Mumbai">Mumbai</option>
-            <option value="Chennai">Chennai</option>
-            <option value="Bangalore">Bangalore</option>
+    <!-- Retailer Page -->
+    <div id="retailer-page" class="page">
+        <h2>Retailer Portal</h2>
+        <label for="location">Select Location:</label>
+        <select id="location">
+            <option value="chennai">Chennai</option>
+            <option value="bangalore">Bangalore</option>
+            <option value="mumbai">Mumbai</option>
         </select>
 
-        <h2>Select a Brand</h2>
-        <select id="brand" onchange="speakText('Brand selected: ' + this.value)">
-            <option value="">--Select Brand--</option>
-            <option value="Brand 1">Brand 1</option>
-            <option value="Brand 2">Brand 2</option>
-            <option value="Brand 3">Brand 3</option>
-            <option value="Brand 4">Brand 4</option>
+        <label for="distributor">Select Distributor:</label>
+        <select id="distributor">
+            <option value="distributor1">Distributor 1</option>
+            <option value="distributor2">Distributor 2</option>
+            <option value="distributor3">Distributor 3</option>
         </select>
 
-        <h2>Select a Distributor</h2>
-        <select id="distributor" onchange="speakText('Distributor selected: ' + this.value)">
-            <option value="">--Select Distributor--</option>
-            <option value="Distributor A">Distributor A</option>
-            <option value="Distributor B">Distributor B</option>
-        </select>
+        <h3>Brands and Products</h3>
+        <div class="brand">
+            <h4>Brand 1</h4>
+            <button class="add-to-cart" onclick="addToCart('Brand 1', 5)">Add to Cart (5 units)</button>
+        </div>
+        <div class="brand">
+            <h4>Brand 2</h4>
+            <button class="add-to-cart" onclick="addToCart('Brand 2', 3)">Add to Cart (3 units)</button>
+        </div>
 
-        <button onclick="showProducts()">Show Products</button>
+        <button onclick="checkout()">Checkout</button>
     </div>
 
-    <!-- Products Section -->
-    <div class="products-section" style="display: none;">
-        <h2>Available Products</h2>
-        <ul>
-            <li onclick="speakText('Product 1 selected')">
-                <img src="https://via.placeholder.com/150" alt="Product 1">
-                <h3>Product 1</h3>
-                <p>Price: $100</p>
-            </li>
-            <li onclick="speakText('Product 2 selected')">
-                <img src="https://via.placeholder.com/150" alt="Product 2">
-                <h3>Product 2</h3>
-                <p>Price: $150</p>
-            </li>
-            <li onclick="speakText('Product 3 selected')">
-                <img src="https://via.placeholder.com/150" alt="Product 3">
-                <h3>Product 3</h3>
-                <p>Price: $200</p>
-            </li>
-            <li onclick="speakText('Product 4 selected')">
-                <img src="https://via.placeholder.com/150" alt="Product 4">
-                <h3>Product 4</h3>
-                <p>Price: $250</p>
-            </li>
-        </ul>
+    <!-- Distributor Page -->
+    <div id="distributor-page" class="page">
+        <h2>Distributor Portal</h2>
+        <p>You have received <span id="order-count">5</span> orders today.</p>
     </div>
-</div>
 
-<footer>
-    © 2024 Retailer-Distributor Portal | Powered by Your Business
-</footer>
-
-<script>
-    function login() {
-        const retailerId = document.getElementById('retailerId').value;
-        if (retailerId) {
-            speakText('Welcome, Retailer ' + retailerId);
-            document.querySelector('.login-section').style.display = 'none';
-            document.querySelector('.form-section').style.display = 'block';
-        } else {
-            alert('Please enter your Retailer ID');
+    <script>
+        // Voice assistance function for adding items to the cart
+        function addToCart(brand, quantity) {
+            const message = `${quantity} units of ${brand} added to the cart.`;
+            responsiveVoice.speak(message);
         }
-    }
 
-    function showProducts() {
-        const location = document.getElementById('location').value;
-        const brand = document.getElementById('brand').value;
-        const distributor = document.getElementById('distributor').value;
-
-        if (location && brand && distributor) {
-            speakText('Showing products for ' + brand + ' from ' + distributor + ' in ' + location);
-            document.querySelector('.form-section').style.display = 'none';
-            document.querySelector('.products-section').style.display = 'block';
-        } else {
-            alert('Please select location, brand, and distributor');
+        // Voice confirmation during checkout
+        function checkout() {
+            responsiveVoice.speak("Are you sure you want to proceed to checkout?");
         }
-    }
-
-    function speakText(text) {
-        const msg = new SpeechSynthesisUtterance(text);
-        msg.lang = 'en-US'; // Change to desired language if needed
-        window.speechSynthesis.speak(msg);
-    }
-</script>
-
+    </script>
 </body>
 </html>
