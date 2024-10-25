@@ -1,44 +1,112 @@
+/* Background styling */
 body {
+    background-image: url('background.jpg'); /* Ensure 'background.jpg' is in the same folder */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
     font-family: Arial, sans-serif;
-    background: #f0f2f5;
+    color: #333;
     margin: 0;
     padding: 0;
+}
+
+/* Header and Icon styling for a premium look */
+header {
     display: flex;
-    justify-content: center;
     align-items: center;
-    height: 100vh;
+    justify-content: center;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.8); /* Slight transparency */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
 }
-.login-page {
-    animation: fadeIn 1s ease-in;
+
+header img {
+    width: 50px;
+    height: 50px;
+    margin-right: 10px;
+    border-radius: 50%;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
 }
-.app-icon {
-    width: 80px;
+
+header h1 {
+    font-size: 2rem;
+    color: #003399;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+/* Container styling for login and content boxes */
+.container {
+    max-width: 600px;
+    margin: 60px auto;
+    padding: 30px;
+    background-color: rgba(255, 255, 255, 0.95);
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    animation: fadeIn 1.2s ease-in-out;
+}
+
+h2 {
+    color: #003399;
     margin-bottom: 20px;
 }
-.login-container {
-    width: 300px;
-    padding: 20px;
-    background: #fff;
-    border-radius: 8px;
-    box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.2);
-    text-align: center;
-}
-input, select, button {
+
+/* Input fields and select styling */
+input[type="text"], input[type="password"], select {
     width: 100%;
-    padding: 10px;
+    padding: 12px;
     margin: 10px 0;
-    border-radius: 5px;
     border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
 }
+
+/* Button styling with hover effect */
 button {
     background-color: #5cb85c;
     color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 4px;
     cursor: pointer;
+    margin-top: 10px;
+    transition: background-color 0.3s ease;
 }
+
 button:hover {
-    background-color: #4e9e4e;
+    background-color: #4cae4c;
 }
+
+/* Animations for page transitions */
 @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideInLeft {
+    from { transform: translateX(-100%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes slideInRight {
+    from { transform: translateX(100%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+/* Use animations on different pages */
+.page {
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+.page-1 { animation: slideInLeft 1s ease-in-out; }
+.page-2 { animation: slideInRight 1s ease-in-out; }
+
+/* Message or count display styling */
+.count-display {
+    font-size: 1.2rem;
+    color: #5cb85c;
+    margin-top: 15px;
+    font-weight: bold;
 }
