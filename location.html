@@ -3,24 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Select Location</title>
     <link rel="stylesheet" href="style.css">
+    <title>Location Selection</title>
 </head>
-<body onload="initializeLocationPage()">
-    <div class="flex-container">
-        <div class="location-section">
-            <h2>Select Your Location</h2>
-            <select id="locationSelect" onchange="showDistributors()">
+<body>
+    <div class="container">
+        <h1>Select Your Location</h1>
+        <div class="select-container">
+            <select id="locationSelect">
+                <option value="">Select Location</option>
                 <option value="Mumbai">Mumbai</option>
                 <option value="Delhi">Delhi</option>
             </select>
-            <ul id="distributorList"></ul>
         </div>
-        <div class="distributor-details">
-            <h2>Distributor Details</h2>
-            <ul id="distributorDetailsList"></ul>
+        <ul id="distributorList"></ul>
+        <div id="productsSection" style="display:none;">
+            <h2>Products</h2>
+            <ul id="productList"></ul>
         </div>
     </div>
     <script src="script.js"></script>
+    <script>
+        initializeLocationPage(); // Initialize location page
+    </script>
 </body>
 </html>
