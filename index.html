@@ -4,18 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <title>Smartlink - Login</title>
+    <title>Login</title>
 </head>
 <body>
     <div class="container">
-        <h1>Welcome to Smartlink</h1>
+        <h1 class="title">Retailer Login</h1>
         <form id="loginForm" onsubmit="handleLogin(event)">
             <select id="userRole">
                 <option value="retailer">Retailer</option>
                 <option value="distributor">Distributor</option>
             </select>
-            <input type="text" id="loginId" placeholder="Enter your ID" required>
-            <button type="submit" class="animated-button">Login</button>
+            <input type="text" id="loginId" placeholder="Enter ID" required>
+            <button type="submit">Login</button>
         </form>
     </div>
     <script src="script.js"></script>
