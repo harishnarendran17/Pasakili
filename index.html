@@ -1,27 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Animated Login</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smartlink - Login</title>
+  <link rel="stylesheet" href="style.css">
 </head>
-<body>
-    <div class="login-container">
-        <h1 class="fade-in">Welcome to the FMCG Portal</h1>
-        <p class="fade-in">Select Login Type</p>
-        <button id="retailerLogin" class="login-button slide-in-left">Login as Retailer</button>
-        <button id="distributorLogin" class="login-button slide-in-right">Login as Distributor</button>
-    </div>
-
-    <script>
-        document.getElementById('retailerLogin').addEventListener('click', function () {
-            window.location.href = 'retailer_login.html';
-        });
-
-        document.getElementById('distributorLogin').addEventListener('click', function () {
-            window.location.href = 'distributor_login.html';
-        });
-    </script>
+<body class="login-page">
+  <div class="login-container">
+    <img src="assets/icon.png" alt="Smartlink Icon" class="app-icon">
+    <h1>Welcome to Smartlink</h1>
+    <form id="loginForm" onsubmit="return handleLogin(event)">
+      <select id="userRole">
+        <option value="retailer">Login as Retailer</option>
+        <option value="distributor">Login as Distributor</option>
+      </select>
+      <input type="text" id="loginId" placeholder="Enter ID (e.g., custom1234)" required>
+      <button type="submit">Login</button>
+    </form>
+  </div>
+  <script src="script.js"></script>
 </body>
 </html>
