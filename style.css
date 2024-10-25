@@ -2,77 +2,69 @@ body {
     font-family: Arial, sans-serif;
     background-image: url('background.jpg');
     background-size: cover;
-    color: #333;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-    overflow: hidden;
+    color: #ffffff;
 }
 
 .container {
-    background-color: rgba(255, 255, 255, 0.8); /* White background with transparency */
+    width: 300px;
+    margin: 100px auto;
     padding: 20px;
+    background: rgba(0, 0, 0, 0.7);
     border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     text-align: center;
-    width: 300px; /* Fixed width for the container */
-    animation: fadeIn 1s ease-in-out;
+    animation: fadeIn 0.5s;
 }
 
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(-20px); }
-    to { opacity: 1; transform: translateY(0); }
+.title {
+    font-size: 24px;
+    color: #f8f8f8;
+    margin-bottom: 20px;
 }
 
-h1 {
-    color: #f39c12; /* Light color for title */
-}
-
-select, input, button {
+input[type="text"],
+select {
     width: 100%;
     padding: 10px;
-    margin: 10px 0;
-    border: 1px solid #ccc;
+    margin-bottom: 10px;
+    border: none;
     border-radius: 5px;
-    font-size: 16px;
-    transition: transform 0.3s;
 }
 
 button {
-    background-color: #2980b9; /* Blue button color */
-    color: white;
-    cursor: pointer;
-    transition: background-color 0.3s, transform 0.3s;
-}
-
-button:hover {
-    background-color: #3498db; /* Darker blue on hover */
-    transform: scale(1.05);
-}
-
-.distributor-list, .product-list {
-    list-style-type: none;
-    padding: 0;
-    animation: slideIn 0.5s ease-in-out;
-}
-
-@keyframes slideIn {
-    from { transform: translateY(20px); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
-}
-
-.distributor-item, .product-item {
+    width: 100%;
     padding: 10px;
-    margin: 5px 0;
-    border: 1px solid #ddd;
+    background-color: #5cb85c;
+    border: none;
     border-radius: 5px;
-    background-color: #f9f9f9;
+    color: white;
+    font-size: 16px;
     cursor: pointer;
     transition: background-color 0.3s;
 }
 
-.distributor-item:hover, .product-item:hover {
-    background-color: #f1c40f; /* Highlight on hover */
+button:hover {
+    background-color: #4cae4c;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    background: rgba(255, 255, 255, 0.2);
+    margin: 5px 0;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+li:hover {
+    transform: scale(1.05);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
 }
