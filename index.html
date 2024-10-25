@@ -3,16 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>Animated Login</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <h1>Welcome</h1>
-        <h2>Please select your role:</h2>
-        <button onclick="window.location.href='retailer_login.html'">Retailer Login</button>
-        <button onclick="window.location.href='distributor_login.html'">Distributor Login</button>
+    <div class="login-container">
+        <h1 class="fade-in">Welcome to the FMCG Portal</h1>
+        <p class="fade-in">Select Login Type</p>
+        <button id="retailerLogin" class="login-button slide-in-left">Login as Retailer</button>
+        <button id="distributorLogin" class="login-button slide-in-right">Login as Distributor</button>
     </div>
-    <script src="script.js"></script>
+
+    <script>
+        document.getElementById('retailerLogin').addEventListener('click', function () {
+            window.location.href = 'retailer_login.html';
+        });
+
+        document.getElementById('distributorLogin').addEventListener('click', function () {
+            window.location.href = 'distributor_login.html';
+        });
+    </script>
 </body>
 </html>
