@@ -57,62 +57,54 @@ const productData = {
 // Event Listeners
 document.getElementById('retailer-login-form').addEventListener('submit', function (e) {
     e.preventDefault();
-    const retailerId = document.getElementById('retailer-id').value;
+    const retailerId = document.getElementById('retailer-id').value; // Retrieve retailer ID
     if (retailerId === 'custom1234') {
-        document.getElementById('location-selection').style.display = 'block';
-        document.getElementById('retailer-login').style.display = 'none';
+        document.getElementById('location-selection').style.display = 'block'; // Show location selection
+        document.getElementById('retailer-login').style.display = 'none'; // Hide retailer login
     } else {
-        alert('Invalid ID. Please try again.');
+        alert('Invalid ID. Please try again.'); // Show error for invalid ID
     }
 });
 
 document.getElementById('location-select').addEventListener('change', function () {
-    const selectedLocation = this.value;
+    const selectedLocation = this.value; // Get selected location
     document.getElementById('brand-selection').innerHTML = ''; // Clear previous brands
     // Dummy data for brand selection based on the location
-    const availableBrands = Object.keys(productData).map(brand => `<option value="${brand}">${brand}</option>`).join('');
-    document.getElementById('brand-selection').innerHTML = availableBrands;
-    document.getElementById('brand-list').style.display = 'block';
+    const availableBrands = Object.keys(productData);
+    availableBrands.forEach(brand => {
+        const option = document.createElement('option');
+        option.value = brand;
+        option.textContent = brand;
+        document.getElementById('brand-select').appendChild(option); // Populate brand select
+    });
+    document.getElementById('brand-list').style.display = 'block'; // Show brand selection
 });
 
 document.getElementById('brand-select').addEventListener('change', function () {
-    const selectedBrand = this.value;
-    const categories = Object.keys(productData[selectedBrand]);
-    let categoryHtml = '<select id="category-select"><option>Select Category</option>';
+    const selectedBrand = this.value; // Get selected brand
+    const categories = Object.keys(productData[selectedBrand]); // Get categories of the selected brand
+    document.getElementById('category-selection').innerHTML = ''; // Clear previous categories
     categories.forEach(category => {
-        categoryHtml += `<option value="${category}">${category}</option>`;
+        const button = document.createElement('button');
+        button.textContent = category;
+        button.onclick = () => showProducts(selectedBrand, category);
+        document.getElementById('category-selection').appendChild(button); // Populate category selection
     });
-    categoryHtml += '</select>';
-    document.getElementById('category-selection').innerHTML = categoryHtml;
-    document.getElementById('category-selection').style.display = 'block';
+    document.getElementById('category-selection').style.display = 'block'; // Show category selection
 });
 
-document.getElementById('category-selection').addEventListener('change', function () {
-    const selectedCategory = document.getElementById('category-select').value;
-    const selectedBrand = document.getElementById('brand-select').value;
-    const products = productData[selectedBrand][selectedCategory];
-    let productHtml = '<div class="product-card">';
+function showProducts(brand, category) {
+    const products = productData[brand][category]; // Get products of selected brand and category
+    document.getElementById('product-page').innerHTML = ''; // Clear previous products
     products.forEach(product => {
-        productHtml += `
-        <div class="product-item">
+        const productDiv = document.createElement('div');
+        productDiv.classList.add('product-item');
+        productDiv.innerHTML = `
             <h3>${product}</h3>
-            <p>Distributor: Example Distributor</p>
-            <p>Location: Example Location</p>
-            <p>Contact: 1234567890</p>
-            <label for="quantity">Quantity:</label>
-            <input type="number" id="quantity" value="1" min="1">
-            <button class="add-to-cart" onclick="addToCart('${product}')">Add to Cart</button>
-        </div>`;
+            <p>Brand: ${brand}</p>
+            <button>Add to Cart</button>
+        `;
+        document.getElementById('product-page').appendChild(productDiv); // Populate product details
     });
-    productHtml += '</div>';
-    document.getElementById('product-details').innerHTML = productHtml;
-    document.getElementById('product-page').style.display = 'block';
-});
-
-// Function to add product to cart
-function addToCart(product) {
-    alert(`${product} has been added to the cart.`);
+    document.getElementById('product-details').style.display = 'block'; // Show product details
 }
-
-// Adding background image to the body
-document.body.style.backgroundImage = "url('background.jpg')";
