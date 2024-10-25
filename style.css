@@ -1,91 +1,53 @@
-/* Basic Reset */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
 body {
-    font-family: 'Arial', sans-serif;
-    background-image: url('background.jpg');
+    font-family: Arial, sans-serif;
+    background: url('background.jpg') no-repeat center center fixed;
     background-size: cover;
-    background-position: center;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
     color: #333;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
 }
 
-/* Main Container Styling */
 .container {
-    width: 100%;
-    max-width: 450px;
+    max-width: 400px;
     padding: 30px;
-    background-color: rgba(245, 245, 220, 0.9); /* Semi-transparent beige */
-    border-radius: 12px;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    background-color: rgba(245, 245, 220, 0.85); /* beige with transparency */
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
     text-align: center;
-    margin: 20px;
 }
 
-/* Heading and Text Styling */
 h1 {
-    font-size: 1.8rem;
-    color: #f4f4f4; /* Light color for visibility */
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);
+    color: #eee; /* Light color for visibility on beige */
     margin-bottom: 20px;
+    font-size: 2em;
 }
 
-p {
-    font-size: 1rem;
-    color: #555;
-    margin-bottom: 20px;
-}
-
-/* Input Fields */
-input[type="text"], select {
+input[type="text"], input[type="password"], select {
     width: 100%;
     padding: 12px;
     margin: 10px 0;
     border: 1px solid #ccc;
     border-radius: 6px;
-    font-size: 1rem;
+    font-size: 1em;
 }
 
-/* Button Styling */
 button {
-    font-size: 1rem;
-    color: #fff;
-    background-color: #6a5acd; /* Premium purple */
-    padding: 12px 20px;
+    background-color: #6B8E23; /* Olive color */
+    color: white;
     border: none;
-    border-radius: 8px;
+    padding: 12px;
+    font-size: 1em;
+    font-weight: bold;
+    border-radius: 6px;
     cursor: pointer;
-    transition: background-color 0.3s, transform 0.2s;
+    transition: background-color 0.3s, transform 0.3s;
+    margin-top: 15px;
 }
 
 button:hover {
-    background-color: #483d8b; /* Darker shade on hover */
+    background-color: #556B2F;
     transform: scale(1.05);
-}
-
-/* Animation for page load */
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
-
-.container {
-    animation: fadeIn 1s ease-in-out;
-}
-
-/* Animation for button hover */
-button:hover {
-    animation: hoverEffect 0.3s ease-in-out forwards;
-}
-
-@keyframes hoverEffect {
-    0% { transform: scale(1); }
-    100% { transform: scale(1.05); }
 }
