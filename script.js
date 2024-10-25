@@ -10,69 +10,27 @@ let distributors = {
 };
 
 let products = {
-    "Parachute": {
-        name: "Hair Oil",
-        distributor: "Marico",
-        contact: "123-456-7890",
-        location: "Mumbai"
-    },
-    "Nihar": {
-        name: "Hair Oil",
-        distributor: "Marico",
-        contact: "123-456-7890",
-        location: "Mumbai"
-    },
-    "Saffola": {
-        name: "Oats",
-        distributor: "Marico",
-        contact: "123-456-7890",
-        location: "Mumbai"
-    },
-    "Dabur Amla": {
-        name: "Hair Oil",
-        distributor: "Dabur",
-        contact: "098-765-4321",
-        location: "Mumbai"
-    },
-    "Dabur Honey": {
-        name: "Honey",
-        distributor: "Dabur",
-        contact: "098-765-4321",
-        location: "Mumbai"
-    },
-    "Aashirvaad": {
-        name: "Flour",
-        distributor: "ITC",
-        contact: "321-654-9870",
-        location: "Delhi"
-    },
-    "Sunfeast": {
-        name: "Biscuits",
-        distributor: "ITC",
-        contact: "321-654-9870",
-        location: "Delhi"
-    },
-    "Colgate": {
-        name: "Toothpaste",
-        distributor: "Colgate-Palmolive",
-        contact: "456-789-0123",
-        location: "Delhi"
-    },
-    "Palmolive": {
-        name: "Shampoo",
-        distributor: "Colgate-Palmolive",
-        contact: "456-789-0123",
-        location: "Delhi"
-    },
+    "Parachute": ["Hair Oil", "Shampoo"],
+    "Nihar": ["Hair Oil", "Cream"],
+    "Saffola": ["Oats", "Oil"],
+    "Dabur Amla": ["Hair Oil", "Shampoo"],
+    "Dabur Honey": ["Honey", "Ghee"],
+    "Colgate": ["Toothpaste", "Toothbrush"],
+    "Palmolive": ["Shampoo", "Body Wash"],
+    "Aashirvaad": ["Flour", "Salt"],
+    "Sunfeast": ["Biscuits", "Noodles"],
+    "Fiama": ["Body Wash", "Shampoo"]
 };
+
+let cart = [];
 
 // Handle login based on role
 function handleLogin(event) {
     event.preventDefault();
     const userRole = document.getElementById('userRole').value;
     const loginId = document.getElementById('loginId').value;
-
-    if (userRole === 'retailer' && loginId === 'custom1234') {
+    
+    if (userRole === 'retailer' && loginId === '1234') {
         localStorage.setItem('role', 'retailer');
         window.location.href = 'location.html';
     } else if (userRole === 'distributor' && loginId === 'distributor1234') {
@@ -83,69 +41,92 @@ function handleLogin(event) {
     }
 }
 
-// Show distributors after location selection
+// Show distributors and brands after location selection
 function showDistributors() {
     const location = document.getElementById('locationSelect').value;
     const distributorList = document.getElementById('distributorList');
-    distributorList.innerHTML = ""; // Clear distributor list
-
+    distributorList.innerHTML = ""; // Clear list
+    
     if (distributors[location]) {
         distributors[location].forEach((distributor) => {
             const distributorItem = document.createElement('li');
+            distributorItem.className = 'distributor-item';
             distributorItem.innerHTML = `
-                <strong>${distributor.name}</strong> - Brands: ${distributor.brands.length}
+                <span>${distributor.name} - Brands: ${distributor.brands.join(", ")}</span>
             `;
-            distributorItem.onclick = () => {
-                localStorage.setItem('selectedDistributor', distributor.name);
-                showBrands(distributor.brands);
-            };
+            distributorItem.onclick = () => showProducts(distributor);
             distributorList.appendChild(distributorItem);
         });
     } else {
-        distributorList.innerHTML = "<li>No distributors available</li>";
+        distributorList.innerHTML = "<li>No distributors found for this location.</li>";
     }
 }
 
-// Show brand names
-function showBrands(brands) {
-    const brandList = document.getElementById('brandList');
-    brandList.innerHTML = ""; // Clear previous brands
-
-    brands.forEach((brand) => {
-        const brandItem = document.createElement('li');
-        brandItem.innerText = brand;
-        brandItem.onclick = () => {
-            localStorage.setItem('selectedBrand', brand);
-            window.location.href = 'products.html';
-        };
-        brandList.appendChild(brandItem);
+// Show products for a selected brand
+function showProducts(distributor) {
+    const productList = document.getElementById('productList');
+    productList.innerHTML = ""; // Clear previous products
+    
+    distributor.brands.forEach((brand) => {
+        const brandProducts = products[brand] || [];
+        brandProducts.forEach((product) => {
+            const productCard = document.createElement('div');
+            productCard.className = 'product-card';
+            productCard.innerHTML = `
+                <h3>${product} (${brand})</h3>
+                <p>Distributor: ${distributor.name}</p>
+                <p>Location: ${locationSelect.value}</p>
+                <p>Contact: [Contact Details]</p>
+                <input type="number" placeholder="Quantity" min="1" id="quantity_${product}" />
+                <button onclick="addToCart('${product}', '${brand}', '${distributor.name}', '${locationSelect.value}')">Add to Cart</button>
+            `;
+            productList.appendChild(productCard);
+        });
     });
+    document.getElementById('productsSection').style.display = 'block';
 }
 
-// Show product details on the product page
-function displayProductDetails() {
-    const selectedBrand = localStorage.getItem('selectedBrand');
-    const productDetailsDiv = document.getElementById('productDetails');
-    const product = products[selectedBrand];
-
-    if (product) {
-        productDetailsDiv.innerHTML = `
-            <div class="card">
-                <h2>${product.name}</h2>
-                <p>Distributor: ${product.distributor}</p>
-                <p>Location: ${product.location}</p>
-                <p>Contact: ${product.contact}</p>
-                <label for="quantity">Quantity:</label>
-                <input type="number" id="quantity" min="1" value="1">
-            </div>
-        `;
+// Add product to cart
+function addToCart(product, brand, distributor, location) {
+    const quantity = document.getElementById(`quantity_${product}`).value;
+    const item = cart.find(i => i.product === product && i.brand === brand);
+    if (item) {
+        item.quantity += parseInt(quantity);
     } else {
-        productDetailsDiv.innerHTML = "<p>Product not found.</p>";
+        cart.push({ product, brand, distributor, location, quantity: parseInt(quantity) });
+    }
+    alert(`Added ${quantity} of ${product} (${brand}) to cart. Total items in cart: ${cart.length}`);
+}
+
+// Display cart
+function showCart() {
+    const cartList = document.getElementById('cartList');
+    cartList.innerHTML = ""; // Clear cart list
+    
+    if (cart.length > 0) {
+        cart.forEach(item => {
+            const cartItem = document.createElement('li');
+            cartItem.className = 'cart-item';
+            cartItem.innerHTML = `
+                <span>${item.product} (${item.brand}) - Quantity: ${item.quantity}</span>
+            `;
+            cartList.appendChild(cartItem);
+        });
+    } else {
+        cartList.innerHTML = "<li>Your cart is empty.</li>";
     }
 }
 
-// Add to cart functionality
-function addToCart() {
-    const quantity = document.getElementById('quantity').value;
-    alert(`Added ${quantity} item(s) to the cart!`);
+// Initialization functions for page load
+function initializeLocationPage() {
+    const locationSelect = document.getElementById('locationSelect');
+    locationSelect.onchange = showDistributors;
+}
+
+function initializeDistributorsPage() {
+    showDistributors();
+}
+
+function initializeProductsPage() {
+    showCart();
 }
