@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Cart</title>
+    <title>Cart</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body onload="initializeProductsPage()">
     <div class="container">
-        <h1>Your Cart</h1>
-        <p>Your cart is currently empty.</p>
-        <a href="index.html">Continue Shopping</a>
+        <h2>Your Cart</h2>
+        <ul id="cartList"></ul>
     </div>
+    <script src="script.js"></script>
 </body>
 </html>
