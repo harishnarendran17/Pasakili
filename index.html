@@ -3,21 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>Smartlink - Retailer Login</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
-        <h1>Login</h1>
-        <form onsubmit="handleLogin(event)">
+        <h1 class="title">Smartlink</h1>
+        <form id="loginForm" onsubmit="handleLogin(event)">
             <select id="userRole">
                 <option value="retailer">Retailer</option>
                 <option value="distributor">Distributor</option>
             </select>
-            <input type="text" id="loginId" placeholder="Enter ID" required>
+            <input type="text" id="loginId" placeholder="Enter ID (1234)" required>
             <button type="submit">Login</button>
         </form>
     </div>
+
     <script src="script.js"></script>
 </body>
 </html>
