@@ -11,14 +11,14 @@ let distributors = {
 };
 
 let products = {
-    "Parachute": ["Hair Oil", "Shampoo"],
-    "Nihar": ["Hair Oil", "Cream"],
-    "Saffola": ["Oats", "Oil"],
-    "Dabur Amla": ["Hair Oil", "Shampoo"],
-    "Dabur Honey": ["Honey", "Ghee"],
-    "Colgate": ["Toothpaste", "Toothbrush"],
-    "Palmolive": ["Shampoo", "Body Wash"],
-    "Aashirvaad": ["Flour", "Salt"]
+    "Parachute": { details: ["Hair Oil", "Shampoo"], distributor: "Marico", contact: "1234567890", location: "Mumbai" },
+    "Nihar": { details: ["Hair Oil", "Cream"], distributor: "Marico", contact: "1234567890", location: "Mumbai" },
+    "Saffola": { details: ["Oats", "Oil"], distributor: "Marico", contact: "1234567890", location: "Mumbai" },
+    "Dabur Amla": { details: ["Hair Oil", "Shampoo"], distributor: "Dabur", contact: "0987654321", location: "Mumbai" },
+    "Dabur Honey": { details: ["Honey", "Ghee"], distributor: "Dabur", contact: "0987654321", location: "Mumbai" },
+    "Colgate": { details: ["Toothpaste", "Toothbrush"], distributor: "Colgate-Palmolive", contact: "1112233445", location: "Delhi" },
+    "Palmolive": { details: ["Shampoo", "Body Wash"], distributor: "Colgate-Palmolive", contact: "1112233445", location: "Delhi" },
+    "Aashirvaad": { details: ["Flour", "Salt"], distributor: "ITC", contact: "2223344556", location: "Delhi" },
 };
 
 let cart = [];
@@ -71,29 +71,39 @@ function showProducts() {
     productList.innerHTML = ""; // Clear previous products
 
     distributor.brands.forEach((brand) => {
-        const brandProducts = products[brand] || [];
+        const brandProducts = Object.keys(products).filter(p => products[p].distributor === brand);
+        
         brandProducts.forEach((product) => {
-            const productItem = document.createElement('li');
-            productItem.className = 'product-item';
-            productItem.innerHTML = `
-                <span>${product} (${brand})</span>
-                <input type="number" value="1" min="1" id="qty-${product.replace(/\s+/g, '')}"> <!-- Quantity Input -->
-                <button onclick="addToCart('${product}', '${brand}')">Add to Cart</button>
+            const productDetails = products[product];
+            const productCard = document.createElement('div');
+            productCard.className = 'product-card';
+            productCard.innerHTML = `
+                <h3>${product}</h3>
+                <p>Distributor: ${productDetails.distributor}</p>
+                <p>Contact: ${productDetails.contact}</p>
+                <p>Location: ${productDetails.location}</p>
+                <label for="qty-${product.replace(/\s+/g, '')}">Quantity:</label>
+                <input type="number" value="1" min="1" id="qty-${product.replace(/\s+/g, '')}">
+                <button onclick="addToCart('${product}')">Add to Cart</button>
             `;
-            productList.appendChild(productItem);
+            productList.appendChild(productCard);
         });
     });
 }
 
 // Add product to cart
-function addToCart(product, brand) {
-    const item = cart.find(i => i.product === product && i.brand === brand);
+function addToCart(product) {
+    const quantity = parseInt(document.getElementById(`qty-${product.replace(/\s+/g, '')}`).value);
+    const item = cart.find(i => i.product === product);
+    
     if (item) {
-        item.quantity += parseInt(document.getElementById(`qty-${product.replace(/\s+/g, '')}`).value); // Get quantity from input
+        item.quantity += quantity;
     } else {
-        cart.push({ product, brand, quantity: parseInt(document.getElementById(`qty-${product.replace(/\s+/g, '')}`).value) });
+        cart.push({ product, quantity });
     }
-    alert(`Added ${product} (${brand}) to cart. Total items in cart: ${cart.length}`);
+    
+    const speech = new SpeechSynthesisUtterance(`Added ${product} to cart. Total items in cart: ${cart.length}`);
+    window.speechSynthesis.speak(speech);
 }
 
 // Display cart
@@ -106,7 +116,7 @@ function showCart() {
             const cartItem = document.createElement('li');
             cartItem.className = 'cart-item';
             cartItem.innerHTML = `
-                <span>${item.product} (${item.brand}) - Quantity: ${item.quantity}</span>
+                <span>${item.product} - Quantity: ${item.quantity}</span>
             `;
             cartList.appendChild(cartItem);
         });
