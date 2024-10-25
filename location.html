@@ -9,12 +9,13 @@
 <body>
     <div class="container">
         <h1 class="title">Select Location</h1>
-        <select id="locationSelect">
+        <select id="locationSelect" onchange="showDistributors()">
             <option value="">--Select Location--</option>
             <option value="Mumbai">Mumbai</option>
             <option value="Delhi">Delhi</option>
         </select>
         <ul id="distributorList"></ul>
+        <ul id="brandList"></ul>
     </div>
     <script src="script.js"></script>
 </body>
