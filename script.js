@@ -53,7 +53,10 @@ function showDistributors() {
             distributorItem.innerHTML = `
                 <span>${distributor.name} - ${distributor.brands.join(", ")}</span>
             `;
-            distributorItem.onclick = () => showProducts(distributor);
+            distributorItem.onclick = () => {
+                localStorage.setItem('selectedDistributor', JSON.stringify(distributor));
+                window.location.href = 'products.html'; // Redirect to products page
+            };
             distributorList.appendChild(distributorItem);
         });
     } else {
@@ -61,11 +64,12 @@ function showDistributors() {
     }
 }
 
-// Show products for a selected brand
-function showProducts(distributor) {
+// Show products for a selected distributor
+function showProducts() {
+    const distributor = JSON.parse(localStorage.getItem('selectedDistributor'));
     const productList = document.getElementById('productList');
     productList.innerHTML = ""; // Clear previous products
-    
+
     distributor.brands.forEach((brand) => {
         const brandProducts = products[brand] || [];
         brandProducts.forEach((product) => {
@@ -79,10 +83,6 @@ function showProducts(distributor) {
             productList.appendChild(productItem);
         });
     });
-    
-    document.getElementById('productsSection').style.display = 'block';
-    // Optionally navigate to products page
-    window.location.href = 'products.html'; // Redirect to products page
 }
 
 // Add product to cart
@@ -121,10 +121,6 @@ function initializeLocationPage() {
     locationSelect.onchange = showDistributors;
 }
 
-function initializeDistributorsPage() {
-    showDistributors();
-}
-
 function initializeProductsPage() {
-    showCart();
+    showProducts();
 }
