@@ -4,23 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <title>Smartlink Login</title>
+    <title>Smartlink - Login</title>
 </head>
 <body>
     <div class="container">
-        <div class="login-box">
-            <h1>Smartlink Login</h1>
-            <form onsubmit="handleLogin(event)">
-                <select id="userRole" required>
-                    <option value="" disabled selected>Select Role</option>
-                    <option value="retailer">Retailer</option>
-                    <option value="distributor">Distributor</option>
-                </select>
-                <input type="text" id="loginId" placeholder="Enter ID (e.g., custom1234)" required>
-                <button type="submit">Login</button>
-            </form>
-            <div class="footer">© 2024 Smartlink. All rights reserved.</div>
-        </div>
+        <h1>Welcome to Smartlink</h1>
+        <form id="loginForm" onsubmit="handleLogin(event)">
+            <select id="userRole">
+                <option value="retailer">Retailer</option>
+                <option value="distributor">Distributor</option>
+            </select>
+            <input type="text" id="loginId" placeholder="Enter your ID" required>
+            <button type="submit">Login</button>
+        </form>
     </div>
     <script src="script.js"></script>
 </body>
