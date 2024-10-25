@@ -44,7 +44,10 @@ function handleLogin(event) {
 function showDistributors() {
     const location = document.getElementById('locationSelect').value;
     const distributorList = document.getElementById('distributorList');
+    const distributorDetailsList = document.getElementById('distributorDetailsList');
+    
     distributorList.innerHTML = ""; // Clear list
+    distributorDetailsList.innerHTML = ""; // Clear distributor details
     
     if (distributors[location]) {
         distributors[location].forEach((distributor) => {
@@ -55,6 +58,11 @@ function showDistributors() {
             `;
             distributorItem.onclick = () => showProducts(distributor);
             distributorList.appendChild(distributorItem);
+
+            // Add to distributor details
+            const detailItem = document.createElement('li');
+            detailItem.innerHTML = `${distributor.name}: ${distributor.brands.join(", ")}`;
+            distributorDetailsList.appendChild(detailItem);
         });
     } else {
         distributorList.innerHTML = "<li>No distributors found for this location.</li>";
@@ -114,7 +122,7 @@ function showCart() {
 // Initialization functions for page load
 function initializeLocationPage() {
     const locationSelect = document.getElementById('locationSelect');
-    locationSelect.onchange = showDistributors;
+    showDistributors(); // Populate distributors on page load
 }
 
 function initializeDistributorsPage() {
