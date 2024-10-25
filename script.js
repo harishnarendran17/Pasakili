@@ -1,65 +1,45 @@
 let distributors = {
     "Mumbai": [
-        { name: "Marico", brands: ["Parachute", "Nihar", "Saffola"] },
-        { name: "Dabur", brands: ["Dabur Amla", "Dabur Honey", "Dabur Gulabari"] },
+        { name: "Distributor 1", brands: ["Brand A", "Brand B"] },
+        { name: "Distributor 2", brands: ["Brand C", "Brand D"] },
+        { name: "Distributor 3", brands: ["Brand E", "Brand F"] },
+        { name: "Distributor 4", brands: ["Brand G", "Brand H"] },
+        { name: "Distributor 5", brands: ["Brand I", "Brand J"] }
     ],
     "Delhi": [
-        { name: "Colgate-Palmolive", brands: ["Colgate", "Palmolive", "Kissan"] },
-        { name: "ITC", brands: ["Aashirvaad", "Sunfeast", "Fiama"] },
+        { name: "Distributor 6", brands: ["Brand K", "Brand L"] },
+        { name: "Distributor 7", brands: ["Brand M", "Brand N"] },
+        { name: "Distributor 8", brands: ["Brand O", "Brand P"] },
+        { name: "Distributor 9", brands: ["Brand Q", "Brand R"] },
+        { name: "Distributor 10", brands: ["Brand S", "Brand T"] }
     ]
 };
 
 let products = {
-    "Parachute": ["Hair Oil", "Shampoo"],
-    "Nihar": ["Hair Oil", "Cream"],
-    "Saffola": ["Oats", "Oil"],
-    "Dabur Amla": ["Hair Oil", "Shampoo"],
-    "Dabur Honey": ["Honey", "Ghee"],
-    "Colgate": ["Toothpaste", "Toothbrush"],
-    "Palmolive": ["Shampoo", "Body Wash"],
-    "Aashirvaad": ["Flour", "Salt"]
+    "Brand A": ["Product 1", "Product 2"],
+    "Brand B": ["Product 3", "Product 4"],
+    "Brand C": ["Product 5", "Product 6"],
+    "Brand D": ["Product 7", "Product 8"],
+    // ... add other brands and products as needed
 };
 
 let cart = [];
-
-// Handle login based on role
-function handleLogin(event) {
-    event.preventDefault();
-    const userRole = document.getElementById('userRole').value;
-    const loginId = document.getElementById('loginId').value;
-    
-    if (userRole === 'retailer' && loginId === 'custom1234') {
-        localStorage.setItem('role', 'retailer');
-        window.location.href = 'location.html';
-    } else if (userRole === 'distributor' && loginId === 'distributor1234') {
-        localStorage.setItem('role', 'distributor');
-        window.location.href = 'distributors.html';
-    } else {
-        alert('Invalid login credentials');
-    }
-}
 
 // Show distributors after location selection
 function showDistributors() {
     const location = document.getElementById('locationSelect').value;
     const distributorList = document.getElementById('distributorList');
     distributorList.innerHTML = ""; // Clear list
-    
+
     if (distributors[location]) {
         distributors[location].forEach((distributor, index) => {
             const distributorItem = document.createElement('li');
             distributorItem.className = 'distributor-item';
             distributorItem.innerHTML = `
                 <span>${distributor.name} - ${distributor.brands.join(", ")}</span>
+                <button onclick="showProducts('${distributor.name}')">Select</button>
             `;
-            distributorItem.onclick = () => showProducts(distributor);
             distributorList.appendChild(distributorItem);
-
-            // Animate the appearance of each distributor item
-            setTimeout(() => {
-                distributorItem.style.opacity = 1;
-                distributorItem.style.transform = 'translateY(0)';
-            }, index * 100); // Delay for each item
         });
     } else {
         distributorList.innerHTML = "<li>No distributors found for this location.</li>";
@@ -67,62 +47,53 @@ function showDistributors() {
 }
 
 // Show products for a selected brand
-function showProducts(distributor) {
+function showProducts(distributorName) {
     const productList = document.getElementById('productList');
     productList.innerHTML = ""; // Clear previous products
-    
-    distributor.brands.forEach((brand) => {
-        const brandProducts = products[brand] || [];
-        brandProducts.forEach((product) => {
-            const productItem = document.createElement('li');
-            productItem.className = 'product-item';
-            productItem.innerHTML = `
-                <span>${product} (${brand})</span>
-                <button onclick="addToCart('${product}', '${brand}')">Add to Cart</button>
-            `;
-            productList.appendChild(productItem);
 
-            // Animate the appearance of each product item
-            setTimeout(() => {
-                productItem.style.opacity = 1;
-                productItem.style.transform = 'translateY(0)';
-            }, 100); // Delay for product appearance
+    const selectedDistributor = distributors[document.getElementById('locationSelect').value]
+        .find(d => d.name === distributorName);
+
+    if (selectedDistributor) {
+        selectedDistributor.brands.forEach(brand => {
+            const brandProducts = products[brand] || [];
+            brandProducts.forEach(product => {
+                const productItem = document.createElement('li');
+                productItem.className = 'product-item';
+                productItem.innerHTML = `
+                    <span>${product} (${brand})</span>
+                    <input type="number" min="1" value="1" id="${product}-quantity" />
+                    <button onclick="addToCart('${product}', '${brand}')">Add to Cart</button>
+                `;
+                productList.appendChild(productItem);
+            });
         });
-    });
-    document.getElementById('productsSection').style.display = 'block';
+    }
+
+    document.getElementById('productsSection').style.display = 'block'; // Show products section
 }
 
-// Add product to cart
+// Add product to cart with voice feedback
 function addToCart(product, brand) {
+    const quantityInput = document.getElementById(`${product}-quantity`);
+    const quantity = parseInt(quantityInput.value);
+    
     const item = cart.find(i => i.product === product && i.brand === brand);
     if (item) {
-        item.quantity += 1;
+        item.quantity += quantity;
     } else {
-        cart.push({ product, brand, quantity: 1 });
+        cart.push({ product, brand, quantity });
     }
-    alert(`Added ${product} (${brand}) to cart. Total items in cart: ${cart.length}`);
-}
 
-// Display cart
-function showCart() {
-    const cartList = document.getElementById('cartList');
-    cartList.innerHTML = ""; // Clear cart list
+    const message = `Added ${quantity} of ${product} (${brand}) to cart. Total items in cart: ${cart.reduce((total, item) => total + item.quantity, 0)}`;
     
-    if (cart.length > 0) {
-        cart.forEach(item => {
-            const cartItem = document.createElement('li');
-            cartItem.className = 'cart-item';
-            cartItem.innerHTML = `
-                <span>${item.product} (${item.brand}) - Quantity: ${item.quantity}</span>
-            `;
-            cartList.appendChild(cartItem);
-        });
-    } else {
-        cartList.innerHTML = "<li>Your cart is empty.</li>";
-    }
+    // Speak the message
+    const utterance = new SpeechSynthesisUtterance(message);
+    window.speechSynthesis.speak(utterance);
+    alert(message); // Show alert as well
 }
 
-// Initialization functions for page load
+// Initialize the page
 function initializeLocationPage() {
     const locationSelect = document.getElementById('locationSelect');
     locationSelect.addEventListener('change', showDistributors);
