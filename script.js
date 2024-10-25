@@ -111,26 +111,32 @@ function showBrands(brands) {
         const brandItem = document.createElement('li');
         brandItem.className = 'brand-item';
         brandItem.innerHTML = brand; // Display brand name
-        brandItem.onclick = () => showProducts(brand);
+        brandItem.onclick = () => {
+            // Save the selected brand to local storage and redirect to the product page
+            localStorage.setItem('selectedBrand', brand);
+            window.location.href = 'products.html';
+        };
         brandList.appendChild(brandItem);
     });
 }
 
-// Show products based on selected brand
-function showProducts(brand) {
+// Display products based on the selected brand
+function displayProducts() {
+    const brand = localStorage.getItem('selectedBrand');
     const productList = document.getElementById('productList');
     productList.innerHTML = ""; // Clear list
 
     // Check if the product exists
-    const product = products[brand];
-    if (product) {
+    if (products[brand]) {
         const productDetails = `
-            <h2>${product.name}</h2>
-            <p>Distributor: ${product.distributor}</p>
-            <p>Contact: ${product.contact}</p>
-            <p>Location: ${product.location}</p>
-            <input type="number" id="quantity" value="1" min="1" placeholder="Quantity">
-            <button onclick="addToCart('${brand}')">Add to Cart</button>
+            <li>
+                <h2>${products[brand].name}</h2>
+                <p>Distributor: ${products[brand].distributor}</p>
+                <p>Contact: ${products[brand].contact}</p>
+                <p>Location: ${products[brand].location}</p>
+                <input type="number" id="quantity" value="1" min="1" placeholder="Quantity">
+                <button onclick="addToCart('${brand}')">Add to Cart</button>
+            </li>
         `;
         productList.innerHTML = productDetails;
     } else {
