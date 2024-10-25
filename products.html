@@ -3,15 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Product Page</title>
+    <title>Products</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
-        <h1>Product Details</h1>
-        <div id="productDetails"></div>
-        <button onclick="addToCart()">Add to Cart</button>
+        <h1>Products</h1>
+        <div id="productsSection">
+            <div id="productList" class="product-list"></div>
+        </div>
     </div>
+
     <script src="script.js"></script>
+    <script>
+        // Retrieve distributor and brand information from localStorage
+        const distributor = localStorage.getItem('selectedDistributor');
+        const brand = localStorage.getItem('selectedBrand');
+
+        // Display products for the selected brand
+        function displayProducts() {
+            const productList = document.getElementById('productList');
+            const brandProducts = products[brand] || [];
+
+            brandProducts.forEach(product => {
+                const productCard = document.createElement('div');
+                productCard.className = 'product-card';
+                productCard.innerHTML = `
+                    <h3>${product} (${brand})</h3>
+                    <p>Distributor: ${distributor}</p>
+                    <p>Location: ${locationSelect.value}</p>
+                    <p>Contact: [Contact Details]</p>
+                    <input type="number" placeholder="Quantity" min="1" id="quantity_${product}" />
+                    <button onclick="addToCart('${product}', '${brand}', '${distributor}')">Add to Cart</button>
+                `;
+                productList.appendChild(productCard);
+            });
+        }
+
+        // Call displayProducts on page load
+        displayProducts();
+    </script>
 </body>
 </html>
