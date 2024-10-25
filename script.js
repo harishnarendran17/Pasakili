@@ -41,6 +41,18 @@ let products = {
         contact: "098-765-4321",
         location: "Mumbai"
     },
+    "Aashirvaad": {
+        name: "Flour",
+        distributor: "ITC",
+        contact: "321-654-9870",
+        location: "Delhi"
+    },
+    "Sunfeast": {
+        name: "Biscuits",
+        distributor: "ITC",
+        contact: "321-654-9870",
+        location: "Delhi"
+    },
     "Colgate": {
         name: "Toothpaste",
         distributor: "Colgate-Palmolive",
@@ -51,12 +63,6 @@ let products = {
         name: "Shampoo",
         distributor: "Colgate-Palmolive",
         contact: "456-789-0123",
-        location: "Delhi"
-    },
-    "Aashirvaad": {
-        name: "Flour",
-        distributor: "ITC",
-        contact: "321-654-9870",
         location: "Delhi"
     },
 };
@@ -109,43 +115,38 @@ function showBrands(brands) {
 
     brands.forEach((brand) => {
         const brandItem = document.createElement('li');
-        brandItem.className = 'brand-item';
-        brandItem.innerHTML = brand; // Display brand name
-        brandItem.onclick = () => {
-            // Save the selected brand to local storage and redirect to the product page
-            localStorage.setItem('selectedBrand', brand);
-            window.location.href = 'products.html';
-        };
+        brandItem.textContent = brand;
+        brandItem.onclick = () => showProducts(brand); // Show products for selected brand
         brandList.appendChild(brandItem);
     });
 }
 
-// Display products based on the selected brand
-function displayProducts() {
-    const brand = localStorage.getItem('selectedBrand');
+// Show products for the selected brand
+function showProducts(brand) {
     const productList = document.getElementById('productList');
-    productList.innerHTML = ""; // Clear list
+    productList.innerHTML = ""; // Clear product list
 
-    // Check if the product exists
     if (products[brand]) {
-        const productDetails = `
-            <li>
-                <h2>${products[brand].name}</h2>
-                <p>Distributor: ${products[brand].distributor}</p>
-                <p>Contact: ${products[brand].contact}</p>
-                <p>Location: ${products[brand].location}</p>
-                <input type="number" id="quantity" value="1" min="1" placeholder="Quantity">
-                <button onclick="addToCart('${brand}')">Add to Cart</button>
-            </li>
+        const product = products[brand];
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML = `
+            <h3>${product.name}</h3>
+            <p>Distributor: ${product.distributor}</p>
+            <p>Location: ${product.location}</p>
+            <p>Contact: ${product.contact}</p>
+            <label for="quantity">Quantity:</label>
+            <input type="number" id="quantity" min="1" value="1">
+            <button onclick="addToCart('${brand}')">Add to Cart</button>
         `;
-        productList.innerHTML = productDetails;
+        productList.appendChild(card);
     } else {
-        alert('Product not found');
+        productList.innerHTML = "<p>No products available</p>";
     }
 }
 
-// Add selected product to cart
+// Function to add items to the cart
 function addToCart(brand) {
     const quantity = document.getElementById('quantity').value;
-    alert(`${quantity} of ${brand} added to cart`);
+    alert(`Added ${quantity} of ${brand} to cart!`);
 }
