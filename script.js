@@ -66,7 +66,7 @@ function handleLogin(event) {
     event.preventDefault();
     const userRole = document.getElementById('userRole').value;
     const loginId = document.getElementById('loginId').value;
-    
+
     if (userRole === 'retailer' && loginId === 'custom1234') {
         localStorage.setItem('role', 'retailer');
         window.location.href = 'location.html';
@@ -82,7 +82,10 @@ function handleLogin(event) {
 function showDistributors() {
     const location = document.getElementById('locationSelect').value;
     const distributorList = document.getElementById('distributorList');
-    distributorList.innerHTML = ""; // Clear list
+    const brandList = document.getElementById('brandList');
+    
+    distributorList.innerHTML = ""; // Clear distributor list
+    brandList.innerHTML = ""; // Clear brand list
 
     if (distributors[location]) {
         distributors[location].forEach((distributor) => {
@@ -91,7 +94,7 @@ function showDistributors() {
             distributorItem.innerHTML = `
                 <span>${distributor.name} - Brands: ${distributor.brands.length}</span>
             `;
-            distributorItem.onclick = () => showProducts(distributor);
+            distributorItem.onclick = () => showBrands(distributor.brands);
             distributorList.appendChild(distributorItem);
         });
     } else {
@@ -99,28 +102,26 @@ function showDistributors() {
     }
 }
 
-// Show products based on distributor
-function showProducts(distributor) {
-    const productList = document.getElementById('productList');
-    productList.innerHTML = ""; // Clear list
+// Show brands based on selected distributor
+function showBrands(brands) {
+    const brandList = document.getElementById('brandList');
+    brandList.innerHTML = ""; // Clear brand list
 
-    // Check if the product list exists
-    if (!productList) {
-        console.error('productList element is null');
-        return;
-    }
-
-    distributor.brands.forEach((brand) => {
-        const productItem = document.createElement('li');
-        productItem.className = 'product-item';
-        productItem.innerHTML = brand; // Display brand name
-        productItem.onclick = () => displayProductDetails(brand);
-        productList.appendChild(productItem);
+    brands.forEach((brand) => {
+        const brandItem = document.createElement('li');
+        brandItem.className = 'brand-item';
+        brandItem.innerHTML = brand; // Display brand name
+        brandItem.onclick = () => showProducts(brand);
+        brandList.appendChild(brandItem);
     });
 }
 
-// Display product details
-function displayProductDetails(brand) {
+// Show products based on selected brand
+function showProducts(brand) {
+    const productList = document.getElementById('productList');
+    productList.innerHTML = ""; // Clear list
+
+    // Check if the product exists
     const product = products[brand];
     if (product) {
         const productDetails = `
@@ -128,11 +129,10 @@ function displayProductDetails(brand) {
             <p>Distributor: ${product.distributor}</p>
             <p>Contact: ${product.contact}</p>
             <p>Location: ${product.location}</p>
-            <label for="quantity">Quantity:</label>
-            <input type="number" id="quantity" value="1" min="1">
+            <input type="number" id="quantity" value="1" min="1" placeholder="Quantity">
             <button onclick="addToCart('${brand}')">Add to Cart</button>
         `;
-        document.getElementById('productList').innerHTML = productDetails;
+        productList.innerHTML = productDetails;
     } else {
         alert('Product not found');
     }
