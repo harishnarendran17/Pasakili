@@ -51,7 +51,7 @@ function showDistributors() {
             const distributorItem = document.createElement('li');
             distributorItem.className = 'distributor-item';
             distributorItem.innerHTML = `
-                <span>${distributor.name} - ${distributor.brands.join(", ")}</span>
+                <span>${distributor.name} - Brands: ${distributor.brands.length}</span>
             `;
             distributorItem.onclick = () => {
                 localStorage.setItem('selectedDistributor', JSON.stringify(distributor));
