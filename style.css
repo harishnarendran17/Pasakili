@@ -8,6 +8,7 @@ body {
     align-items: center;
     height: 100vh;
     margin: 0;
+    overflow: hidden;
 }
 
 .container {
@@ -17,6 +18,12 @@ body {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     text-align: center;
     width: 300px; /* Fixed width for the container */
+    animation: fadeIn 1s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 h1 {
@@ -30,22 +37,30 @@ select, input, button {
     border: 1px solid #ccc;
     border-radius: 5px;
     font-size: 16px;
+    transition: transform 0.3s;
 }
 
 button {
     background-color: #2980b9; /* Blue button color */
     color: white;
     cursor: pointer;
-    transition: background-color 0.3s;
+    transition: background-color 0.3s, transform 0.3s;
 }
 
 button:hover {
     background-color: #3498db; /* Darker blue on hover */
+    transform: scale(1.05);
 }
 
 .distributor-list, .product-list {
     list-style-type: none;
     padding: 0;
+    animation: slideIn 0.5s ease-in-out;
+}
+
+@keyframes slideIn {
+    from { transform: translateY(20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
 }
 
 .distributor-item, .product-item {
