@@ -3,23 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Select Location</title>
     <link rel="stylesheet" href="style.css">
+    <title>Select Location</title>
 </head>
 <body>
     <div class="container">
-        <h1>Select Your Location</h1>
-        <select id="locationSelect" onchange="showBrands()">
+        <h1>Select Location</h1>
+        <select id="locationSelect">
             <option value="">Select Location</option>
             <option value="Mumbai">Mumbai</option>
             <option value="Delhi">Delhi</option>
         </select>
-        
-        <ul id="brandList" class="brand-list"></ul>
 
-        <button onclick="goToDistributorPage()">Continue</button>
+        <ul id="brandList"></ul>
     </div>
-
     <script src="script.js"></script>
 </body>
 </html>
