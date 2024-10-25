@@ -123,24 +123,23 @@ function showProducts(distributor) {
 function displayProductDetails(brand) {
     const product = products[brand];
     if (product) {
-        alert(`Name: ${product.name}\nDistributor: ${product.distributor}\nContact: ${product.contact}\nLocation: ${product.location}`);
+        const productDetails = `
+            <h2>${product.name}</h2>
+            <p>Distributor: ${product.distributor}</p>
+            <p>Contact: ${product.contact}</p>
+            <p>Location: ${product.location}</p>
+            <label for="quantity">Quantity:</label>
+            <input type="number" id="quantity" value="1" min="1">
+            <button onclick="addToCart('${brand}')">Add to Cart</button>
+        `;
+        document.getElementById('productList').innerHTML = productDetails;
     } else {
         alert('Product not found');
     }
 }
 
-// Initialize products page (can be extended later)
-function initializeProductsPage() {
-    // You can add code here to fetch data dynamically if needed
+// Add selected product to cart
+function addToCart(brand) {
+    const quantity = document.getElementById('quantity').value;
+    alert(`${quantity} of ${brand} added to cart`);
 }
-
-// Ensure the script runs after the DOM has fully loaded
-document.addEventListener('DOMContentLoaded', () => {
-    if (window.location.pathname.includes('location.html')) {
-        document.getElementById('locationSelect').addEventListener('change', showDistributors);
-    }
-    
-    if (window.location.pathname.includes('products.html')) {
-        initializeProductsPage();
-    }
-});
