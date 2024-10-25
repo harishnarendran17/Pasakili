@@ -11,17 +11,55 @@ let distributors = {
 };
 
 let products = {
-    "Parachute": ["Hair Oil", "Shampoo"],
-    "Nihar": ["Hair Oil", "Cream"],
-    "Saffola": ["Oats", "Oil"],
-    "Dabur Amla": ["Hair Oil", "Shampoo"],
-    "Dabur Honey": ["Honey", "Ghee"],
-    "Colgate": ["Toothpaste", "Toothbrush"],
-    "Palmolive": ["Shampoo", "Body Wash"],
-    "Aashirvaad": ["Flour", "Salt"]
+    "Parachute": {
+        name: "Hair Oil",
+        distributor: "Marico",
+        contact: "123-456-7890",
+        location: "Mumbai"
+    },
+    "Nihar": {
+        name: "Hair Oil",
+        distributor: "Marico",
+        contact: "123-456-7890",
+        location: "Mumbai"
+    },
+    "Saffola": {
+        name: "Oats",
+        distributor: "Marico",
+        contact: "123-456-7890",
+        location: "Mumbai"
+    },
+    "Dabur Amla": {
+        name: "Hair Oil",
+        distributor: "Dabur",
+        contact: "098-765-4321",
+        location: "Mumbai"
+    },
+    "Dabur Honey": {
+        name: "Honey",
+        distributor: "Dabur",
+        contact: "098-765-4321",
+        location: "Mumbai"
+    },
+    "Colgate": {
+        name: "Toothpaste",
+        distributor: "Colgate-Palmolive",
+        contact: "456-789-0123",
+        location: "Delhi"
+    },
+    "Palmolive": {
+        name: "Shampoo",
+        distributor: "Colgate-Palmolive",
+        contact: "456-789-0123",
+        location: "Delhi"
+    },
+    "Aashirvaad": {
+        name: "Flour",
+        distributor: "ITC",
+        contact: "321-654-9870",
+        location: "Delhi"
+    },
 };
-
-let cart = [];
 
 // Handle login based on role
 function handleLogin(event) {
@@ -71,51 +109,32 @@ function initializeProductsPage() {
     productList.innerHTML = ""; // Clear previous products
 
     distributor.brands.forEach((brand) => {
-        const brandProducts = products[brand] || [];
-        brandProducts.forEach((product) => {
+        const productInfo = products[brand];
+        if (productInfo) {
             const productItem = document.createElement('li');
             productItem.className = 'product-item';
             productItem.innerHTML = `
-                <span>${product} (${brand})</span>
-                <input type="number" min="1" value="1" id="quantity_${product}">
-                <button onclick="addToCart('${product}', '${brand}')">Add to Cart</button>
+                <div>
+                    <strong>${productInfo.name}</strong> from <strong>${productInfo.distributor}</strong>
+                    <p>Contact: ${productInfo.contact}</p>
+                    <p>Location: ${productInfo.location}</p>
+                    <input type="number" min="1" value="1" id="quantity_${productInfo.name}">
+                    <button onclick="addToCart('${productInfo.name}')">Add to Cart</button>
+                </div>
             `;
             productList.appendChild(productItem);
-        });
+        }
     });
 }
 
-// Add product to cart
-function addToCart(product, brand) {
+// Function to add items to the cart with voice alert
+function addToCart(product) {
     const quantity = document.getElementById(`quantity_${product}`).value;
-    const item = cart.find(i => i.product === product && i.brand === brand);
-    if (item) {
-        item.quantity += parseInt(quantity);
-    } else {
-        cart.push({ product, brand, quantity: parseInt(quantity) });
-    }
-    alert(`Added ${product} (${brand}) to cart. Total items in cart: ${cart.length}`);
-}
-
-// Initialization functions for page load
-function initializeProductsPage() {
-    const distributor = JSON.parse(localStorage.getItem('selectedDistributor'));
-    const productList = document.getElementById('productList');
-    productList.innerHTML = ""; // Clear previous products
-
-    distributor.brands.forEach((brand) => {
-        const brandProducts = products[brand] || [];
-        brandProducts.forEach((product) => {
-            const productItem = document.createElement('li');
-            productItem.className = 'product-item';
-            productItem.innerHTML = `
-                <span>${product} (${brand})</span>
-                <input type="number" min="1" value="1" id="quantity_${product}">
-                <button onclick="addToCart('${product}', '${brand}')">Add to Cart</button>
-            `;
-            productList.appendChild(productItem);
-        });
-    });
+    alert(`Added ${quantity} of ${product} to cart`);
+    
+    // Voice alert
+    const utterance = new SpeechSynthesisUtterance(`Added ${quantity} of ${product} to cart`);
+    window.speechSynthesis.speak(utterance);
 }
 
 // Call the initialize function on page load
