@@ -1,4 +1,3 @@
-// Global variables for managing state
 let distributors = {
     "Mumbai": [
         { name: "Marico", brands: ["Parachute", "Nihar", "Saffola"] },
@@ -84,25 +83,22 @@ function handleLogin(event) {
     }
 }
 
-// Show distributors and their brand count after location selection
+// Show distributors after location selection
 function showDistributors() {
     const location = document.getElementById('locationSelect').value;
     const distributorList = document.getElementById('distributorList');
-    const brandList = document.getElementById('brandList');
-
     distributorList.innerHTML = ""; // Clear distributor list
-    brandList.innerHTML = ""; // Clear brand list
 
     if (distributors[location]) {
         distributors[location].forEach((distributor) => {
             const distributorItem = document.createElement('li');
-            distributorItem.className = 'distributor-item';
             distributorItem.innerHTML = `
-                <span>${distributor.name}</span>
-                <ul>
-                    ${distributor.brands.map(brand => `<li onclick="showProducts('${brand}')">${brand}</li>`).join('')}
-                </ul>
+                <strong>${distributor.name}</strong> - Brands: ${distributor.brands.length}
             `;
+            distributorItem.onclick = () => {
+                localStorage.setItem('selectedDistributor', distributor.name);
+                showBrands(distributor.brands);
+            };
             distributorList.appendChild(distributorItem);
         });
     } else {
@@ -110,32 +106,46 @@ function showDistributors() {
     }
 }
 
-// Show products for the selected brand
-function showProducts(brand) {
-    const productList = document.getElementById('productList');
-    productList.innerHTML = ""; // Clear product list
+// Show brand names
+function showBrands(brands) {
+    const brandList = document.getElementById('brandList');
+    brandList.innerHTML = ""; // Clear previous brands
 
-    if (products[brand]) {
-        const product = products[brand];
-        const card = document.createElement('div');
-        card.className = 'card';
-        card.innerHTML = `
-            <h3>${product.name}</h3>
-            <p>Distributor: ${product.distributor}</p>
-            <p>Location: ${product.location}</p>
-            <p>Contact: ${product.contact}</p>
-            <label for="quantity">Quantity:</label>
-            <input type="number" id="quantity" min="1" value="1">
-            <button onclick="addToCart('${brand}')">Add to Cart</button>
+    brands.forEach((brand) => {
+        const brandItem = document.createElement('li');
+        brandItem.innerText = brand;
+        brandItem.onclick = () => {
+            localStorage.setItem('selectedBrand', brand);
+            window.location.href = 'products.html';
+        };
+        brandList.appendChild(brandItem);
+    });
+}
+
+// Show product details on the product page
+function displayProductDetails() {
+    const selectedBrand = localStorage.getItem('selectedBrand');
+    const productDetailsDiv = document.getElementById('productDetails');
+    const product = products[selectedBrand];
+
+    if (product) {
+        productDetailsDiv.innerHTML = `
+            <div class="card">
+                <h2>${product.name}</h2>
+                <p>Distributor: ${product.distributor}</p>
+                <p>Location: ${product.location}</p>
+                <p>Contact: ${product.contact}</p>
+                <label for="quantity">Quantity:</label>
+                <input type="number" id="quantity" min="1" value="1">
+            </div>
         `;
-        productList.appendChild(card);
     } else {
-        productList.innerHTML = "<p>No products available</p>";
+        productDetailsDiv.innerHTML = "<p>Product not found.</p>";
     }
 }
 
-// Function to add items to the cart
-function addToCart(brand) {
+// Add to cart functionality
+function addToCart() {
     const quantity = document.getElementById('quantity').value;
-    alert(`Added ${quantity} of ${brand} to cart!`);
+    alert(`Added ${quantity} item(s) to the cart!`);
 }
