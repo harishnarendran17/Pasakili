@@ -6,11 +6,14 @@
     <title>Distributors</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body onload="initializeDistributorsPage()">
     <div class="container">
-        <h1>Distributors</h1>
-        <div id="distributorList"></div>
-        <button id="backToLocationButton">Back to Location</button>
+        <h2>Available Distributors</h2>
+        <ul id="distributorList"></ul>
+        <section id="productsSection" style="display: none;">
+            <h3>Products</h3>
+            <ul id="productList"></ul>
+        </section>
     </div>
     <script src="script.js"></script>
 </body>
