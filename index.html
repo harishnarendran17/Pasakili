@@ -1,23 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Smartlink - Login</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smartlink - Login</title>
+    <link rel="stylesheet" href="style.css">
 </head>
-<body class="login-page">
-  <div class="login-container">
-    <h1>Welcome to Smartlink</h1>
-    <form id="loginForm" onsubmit="return handleLogin(event)">
-      <select id="userRole">
-        <option value="retailer">Login as Retailer</option>
-        <option value="distributor">Login as Distributor</option>
-      </select>
-      <input type="text" id="loginId" placeholder="Enter ID (e.g., custom1234)" required>
-      <button type="submit">Login</button>
-    </form>
-  </div>
-  <script src="script.js"></script>
+<body>
+    <div class="container">
+        <h1>Smartlink</h1>
+        <form onsubmit="handleLogin(event)">
+            <select id="userRole">
+                <option value="retailer">Retailer</option>
+                <option value="distributor">Distributor</option>
+            </select>
+            <input type="text" id="loginId" placeholder="Enter ID (e.g., 1234)" required>
+            <button type="submit">Login</button>
+        </form>
+    </div>
+    <script src="script.js"></script>
 </body>
 </html>
