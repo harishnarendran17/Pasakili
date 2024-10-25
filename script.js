@@ -11,14 +11,14 @@ let distributors = {
 };
 
 let products = {
-    "Parachute": { details: ["Hair Oil", "Shampoo"], distributor: "Marico", contact: "1234567890", location: "Mumbai" },
-    "Nihar": { details: ["Hair Oil", "Cream"], distributor: "Marico", contact: "1234567890", location: "Mumbai" },
-    "Saffola": { details: ["Oats", "Oil"], distributor: "Marico", contact: "1234567890", location: "Mumbai" },
-    "Dabur Amla": { details: ["Hair Oil", "Shampoo"], distributor: "Dabur", contact: "0987654321", location: "Mumbai" },
-    "Dabur Honey": { details: ["Honey", "Ghee"], distributor: "Dabur", contact: "0987654321", location: "Mumbai" },
-    "Colgate": { details: ["Toothpaste", "Toothbrush"], distributor: "Colgate-Palmolive", contact: "1112233445", location: "Delhi" },
-    "Palmolive": { details: ["Shampoo", "Body Wash"], distributor: "Colgate-Palmolive", contact: "1112233445", location: "Delhi" },
-    "Aashirvaad": { details: ["Flour", "Salt"], distributor: "ITC", contact: "2223344556", location: "Delhi" },
+    "Parachute": ["Hair Oil", "Shampoo"],
+    "Nihar": ["Hair Oil", "Cream"],
+    "Saffola": ["Oats", "Oil"],
+    "Dabur Amla": ["Hair Oil", "Shampoo"],
+    "Dabur Honey": ["Honey", "Ghee"],
+    "Colgate": ["Toothpaste", "Toothbrush"],
+    "Palmolive": ["Shampoo", "Body Wash"],
+    "Aashirvaad": ["Flour", "Salt"]
 };
 
 let cart = [];
@@ -29,29 +29,29 @@ function handleLogin(event) {
     const userRole = document.getElementById('userRole').value;
     const loginId = document.getElementById('loginId').value;
     
-    if (userRole === 'retailer' && loginId === '1234') {
+    if (userRole === 'retailer' && loginId === 'custom1234') {
         localStorage.setItem('role', 'retailer');
-        window.location.href = 'location.html'; // Redirect to location page
+        window.location.href = 'location.html';
     } else if (userRole === 'distributor' && loginId === 'distributor1234') {
         localStorage.setItem('role', 'distributor');
-        window.location.href = 'distributors.html'; // Redirect to distributor page
+        window.location.href = 'distributors.html';
     } else {
         alert('Invalid login credentials');
     }
 }
 
-// Show distributors after location selection
+// Show distributors and their brand count after location selection
 function showDistributors() {
     const location = document.getElementById('locationSelect').value;
     const distributorList = document.getElementById('distributorList');
     distributorList.innerHTML = ""; // Clear list
-    
+
     if (distributors[location]) {
         distributors[location].forEach((distributor) => {
             const distributorItem = document.createElement('li');
             distributorItem.className = 'distributor-item';
             distributorItem.innerHTML = `
-                <span>${distributor.name} - Brands: ${distributor.brands.length}</span>
+                <span>${distributor.name} - Brands: ${distributor.brands.join(', ')}</span>
             `;
             distributorItem.onclick = () => {
                 localStorage.setItem('selectedDistributor', JSON.stringify(distributor));
@@ -64,73 +64,59 @@ function showDistributors() {
     }
 }
 
-// Show products for a selected distributor
-function showProducts() {
+// Show products for a selected brand
+function initializeProductsPage() {
     const distributor = JSON.parse(localStorage.getItem('selectedDistributor'));
     const productList = document.getElementById('productList');
     productList.innerHTML = ""; // Clear previous products
 
     distributor.brands.forEach((brand) => {
-        const brandProducts = Object.keys(products).filter(p => products[p].distributor === brand);
-        
+        const brandProducts = products[brand] || [];
         brandProducts.forEach((product) => {
-            const productDetails = products[product];
-            const productCard = document.createElement('div');
-            productCard.className = 'product-card';
-            productCard.innerHTML = `
-                <h3>${product}</h3>
-                <p>Distributor: ${productDetails.distributor}</p>
-                <p>Contact: ${productDetails.contact}</p>
-                <p>Location: ${productDetails.location}</p>
-                <label for="qty-${product.replace(/\s+/g, '')}">Quantity:</label>
-                <input type="number" value="1" min="1" id="qty-${product.replace(/\s+/g, '')}">
-                <button onclick="addToCart('${product}')">Add to Cart</button>
+            const productItem = document.createElement('li');
+            productItem.className = 'product-item';
+            productItem.innerHTML = `
+                <span>${product} (${brand})</span>
+                <input type="number" min="1" value="1" id="quantity_${product}">
+                <button onclick="addToCart('${product}', '${brand}')">Add to Cart</button>
             `;
-            productList.appendChild(productCard);
+            productList.appendChild(productItem);
         });
     });
 }
 
 // Add product to cart
-function addToCart(product) {
-    const quantity = parseInt(document.getElementById(`qty-${product.replace(/\s+/g, '')}`).value);
-    const item = cart.find(i => i.product === product);
-    
+function addToCart(product, brand) {
+    const quantity = document.getElementById(`quantity_${product}`).value;
+    const item = cart.find(i => i.product === product && i.brand === brand);
     if (item) {
-        item.quantity += quantity;
+        item.quantity += parseInt(quantity);
     } else {
-        cart.push({ product, quantity });
+        cart.push({ product, brand, quantity: parseInt(quantity) });
     }
-    
-    const speech = new SpeechSynthesisUtterance(`Added ${product} to cart. Total items in cart: ${cart.length}`);
-    window.speechSynthesis.speak(speech);
-}
-
-// Display cart
-function showCart() {
-    const cartList = document.getElementById('cartList');
-    cartList.innerHTML = ""; // Clear cart list
-    
-    if (cart.length > 0) {
-        cart.forEach(item => {
-            const cartItem = document.createElement('li');
-            cartItem.className = 'cart-item';
-            cartItem.innerHTML = `
-                <span>${item.product} - Quantity: ${item.quantity}</span>
-            `;
-            cartList.appendChild(cartItem);
-        });
-    } else {
-        cartList.innerHTML = "<li>Your cart is empty.</li>";
-    }
+    alert(`Added ${product} (${brand}) to cart. Total items in cart: ${cart.length}`);
 }
 
 // Initialization functions for page load
-function initializeLocationPage() {
-    const locationSelect = document.getElementById('locationSelect');
-    locationSelect.onchange = showDistributors;
+function initializeProductsPage() {
+    const distributor = JSON.parse(localStorage.getItem('selectedDistributor'));
+    const productList = document.getElementById('productList');
+    productList.innerHTML = ""; // Clear previous products
+
+    distributor.brands.forEach((brand) => {
+        const brandProducts = products[brand] || [];
+        brandProducts.forEach((product) => {
+            const productItem = document.createElement('li');
+            productItem.className = 'product-item';
+            productItem.innerHTML = `
+                <span>${product} (${brand})</span>
+                <input type="number" min="1" value="1" id="quantity_${product}">
+                <button onclick="addToCart('${product}', '${brand}')">Add to Cart</button>
+            `;
+            productList.appendChild(productItem);
+        });
+    });
 }
 
-function initializeProductsPage() {
-    showProducts();
-}
+// Call the initialize function on page load
+window.onload = initializeProductsPage;
