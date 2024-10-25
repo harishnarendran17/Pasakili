@@ -92,8 +92,10 @@ function showDistributors() {
                 <span>${distributor.name} - Brands: ${distributor.brands.join(', ')}</span>
             `;
             distributorItem.onclick = () => {
+                // Store selected distributor
                 localStorage.setItem('selectedDistributor', JSON.stringify(distributor));
-                window.location.href = 'products.html'; // Redirect to products page
+                // Redirect to products page
+                window.location.href = 'products.html'; 
             };
             distributorList.appendChild(distributorItem);
         });
@@ -102,29 +104,31 @@ function showDistributors() {
     }
 }
 
-// Show products for a selected brand
+// Show products for a selected distributor's brands
 function initializeProductsPage() {
     const distributor = JSON.parse(localStorage.getItem('selectedDistributor'));
     const productList = document.getElementById('productList');
     productList.innerHTML = ""; // Clear previous products
 
-    distributor.brands.forEach((brand) => {
-        const productInfo = products[brand];
-        if (productInfo) {
-            const productItem = document.createElement('li');
-            productItem.className = 'product-item';
-            productItem.innerHTML = `
-                <div>
-                    <strong>${productInfo.name}</strong> from <strong>${productInfo.distributor}</strong>
-                    <p>Contact: ${productInfo.contact}</p>
-                    <p>Location: ${productInfo.location}</p>
-                    <input type="number" min="1" value="1" id="quantity_${productInfo.name}">
-                    <button onclick="addToCart('${productInfo.name}')">Add to Cart</button>
-                </div>
-            `;
-            productList.appendChild(productItem);
-        }
-    });
+    if (distributor) {
+        distributor.brands.forEach((brand) => {
+            const productInfo = products[brand];
+            if (productInfo) {
+                const productItem = document.createElement('li');
+                productItem.className = 'product-item';
+                productItem.innerHTML = `
+                    <div>
+                        <strong>${productInfo.name}</strong> from <strong>${productInfo.distributor}</strong>
+                        <p>Contact: ${productInfo.contact}</p>
+                        <p>Location: ${productInfo.location}</p>
+                        <input type="number" min="1" value="1" id="quantity_${productInfo.name}">
+                        <button onclick="addToCart('${productInfo.name}')">Add to Cart</button>
+                    </div>
+                `;
+                productList.appendChild(productItem);
+            }
+        });
+    }
 }
 
 // Function to add items to the cart with voice alert
@@ -136,6 +140,3 @@ function addToCart(product) {
     const utterance = new SpeechSynthesisUtterance(`Added ${quantity} of ${product} to cart`);
     window.speechSynthesis.speak(utterance);
 }
-
-// Call the initialize function on page load
-window.onload = initializeProductsPage;
