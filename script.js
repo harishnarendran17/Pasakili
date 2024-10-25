@@ -1,24 +1,23 @@
-// Global variables for managing state
 let distributors = {
     "Mumbai": [
-        { name: "Distributor 1", brands: ["Parachute", "Saffola"] },
-        { name: "Distributor 2", brands: ["Dabur Amla", "Dabur Honey"] },
+        { name: "Marico", brands: ["Parachute", "Nihar", "Saffola"] },
+        { name: "Dabur", brands: ["Dabur Amla", "Dabur Honey", "Dabur Gulabari"] },
     ],
     "Delhi": [
-        { name: "Distributor 1", brands: ["Colgate", "Palmolive"] },
-        { name: "Distributor 2", brands: ["Aashirvaad", "Sunfeast"] },
+        { name: "Colgate-Palmolive", brands: ["Colgate", "Palmolive", "Kissan"] },
+        { name: "ITC", brands: ["Aashirvaad", "Sunfeast", "Fiama"] },
     ]
 };
 
 let products = {
     "Parachute": ["Hair Oil", "Shampoo"],
+    "Nihar": ["Hair Oil", "Cream"],
     "Saffola": ["Oats", "Oil"],
     "Dabur Amla": ["Hair Oil", "Shampoo"],
     "Dabur Honey": ["Honey", "Ghee"],
     "Colgate": ["Toothpaste", "Toothbrush"],
     "Palmolive": ["Shampoo", "Body Wash"],
-    "Aashirvaad": ["Flour", "Salt"],
-    "Sunfeast": ["Biscuits", "Noodles"]
+    "Aashirvaad": ["Flour", "Salt"]
 };
 
 let cart = [];
@@ -29,7 +28,7 @@ function handleLogin(event) {
     const userRole = document.getElementById('userRole').value;
     const loginId = document.getElementById('loginId').value;
     
-    if (userRole === 'retailer' && loginId === '1234') {
+    if (userRole === 'retailer' && loginId === 'custom1234') {
         localStorage.setItem('role', 'retailer');
         window.location.href = 'location.html';
     } else if (userRole === 'distributor' && loginId === 'distributor1234') {
@@ -47,7 +46,7 @@ function showDistributors() {
     distributorList.innerHTML = ""; // Clear list
     
     if (distributors[location]) {
-        distributors[location].forEach((distributor) => {
+        distributors[location].forEach((distributor, index) => {
             const distributorItem = document.createElement('li');
             distributorItem.className = 'distributor-item';
             distributorItem.innerHTML = `
@@ -55,14 +54,16 @@ function showDistributors() {
             `;
             distributorItem.onclick = () => showProducts(distributor);
             distributorList.appendChild(distributorItem);
+
+            // Animate the appearance of each distributor item
+            setTimeout(() => {
+                distributorItem.style.opacity = 1;
+                distributorItem.style.transform = 'translateY(0)';
+            }, index * 100); // Delay for each item
         });
     } else {
         distributorList.innerHTML = "<li>No distributors found for this location.</li>";
     }
-
-    // Animate distributor list to slide in
-    distributorList.style.transition = 'transform 0.5s ease';
-    distributorList.style.transform = 'translateX(0)';
 }
 
 // Show products for a selected brand
@@ -80,6 +81,12 @@ function showProducts(distributor) {
                 <button onclick="addToCart('${product}', '${brand}')">Add to Cart</button>
             `;
             productList.appendChild(productItem);
+
+            // Animate the appearance of each product item
+            setTimeout(() => {
+                productItem.style.opacity = 1;
+                productItem.style.transform = 'translateY(0)';
+            }, 100); // Delay for product appearance
         });
     });
     document.getElementById('productsSection').style.display = 'block';
@@ -96,16 +103,29 @@ function addToCart(product, brand) {
     alert(`Added ${product} (${brand}) to cart. Total items in cart: ${cart.length}`);
 }
 
+// Display cart
+function showCart() {
+    const cartList = document.getElementById('cartList');
+    cartList.innerHTML = ""; // Clear cart list
+    
+    if (cart.length > 0) {
+        cart.forEach(item => {
+            const cartItem = document.createElement('li');
+            cartItem.className = 'cart-item';
+            cartItem.innerHTML = `
+                <span>${item.product} (${item.brand}) - Quantity: ${item.quantity}</span>
+            `;
+            cartList.appendChild(cartItem);
+        });
+    } else {
+        cartList.innerHTML = "<li>Your cart is empty.</li>";
+    }
+}
+
 // Initialization functions for page load
 function initializeLocationPage() {
     const locationSelect = document.getElementById('locationSelect');
-    locationSelect.onchange = showDistributors;
+    locationSelect.addEventListener('change', showDistributors);
 }
 
-function initializeDistributorsPage() {
-    showDistributors();
-}
-
-function initializeProductsPage() {
-    showCart();
-}
+document.addEventListener('DOMContentLoaded', initializeLocationPage);
