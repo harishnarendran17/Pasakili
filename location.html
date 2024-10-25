@@ -8,14 +8,18 @@
 </head>
 <body>
     <div class="container">
-        <h1>Select Location</h1>
-        <select id="locationSelect" onchange="showDistributors()">
+        <h1>Select Your Location</h1>
+        <select id="locationSelect" onchange="showBrands()">
             <option value="">Select Location</option>
             <option value="Mumbai">Mumbai</option>
             <option value="Delhi">Delhi</option>
         </select>
-        <ul id="distributorList"></ul>
+        
+        <ul id="brandList" class="brand-list"></ul>
+
+        <button onclick="goToDistributorPage()">Continue</button>
     </div>
+
     <script src="script.js"></script>
 </body>
 </html>
