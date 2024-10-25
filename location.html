@@ -8,19 +8,14 @@
 </head>
 <body>
     <div class="container">
-        <h1>Select Your Location</h1>
-        <label for="locationSelect">Choose your location:</label>
+        <h1 class="title">Select Location</h1>
         <select id="locationSelect">
             <option value="">--Select Location--</option>
             <option value="Mumbai">Mumbai</option>
             <option value="Delhi">Delhi</option>
         </select>
-        <ul id="distributorList" class="distributor-list"></ul>
+        <ul id="distributorList"></ul>
     </div>
     <script src="script.js"></script>
-    <script>
-        // Initialize the location page
-        document.getElementById('locationSelect').addEventListener('change', showDistributors);
-    </script>
 </body>
 </html>
