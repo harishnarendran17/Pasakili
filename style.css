@@ -1,83 +1,63 @@
 body {
-    font-family: 'Arial', sans-serif;
-    background-image: url('background.jpg'); /* Set your background image */
+    font-family: Arial, sans-serif;
+    background-image: url('background.jpg');
     background-size: cover;
-    background-position: center;
-    color: #f0f0f0; /* Light text color for better visibility */
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
 }
 
 .container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
+    background-color: rgba(255, 255, 255, 0.8); /* White background with transparency */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     text-align: center;
-}
-
-.login-box {
-    background: rgba(255, 255, 255, 0.2); /* Semi-transparent white background */
-    border-radius: 15px;
-    padding: 40px 30px;
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
-    animation: fadeIn 0.5s ease-in-out; /* Fade-in animation */
-}
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(-20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+    width: 300px; /* Fixed width for the container */
 }
 
 h1 {
-    font-size: 2.5em;
-    margin-bottom: 20px;
-    color: #ffa500; /* Bright orange color for the title */
+    color: #f39c12; /* Light color for title */
 }
 
-input {
+select, input, button {
     width: 100%;
     padding: 10px;
-    border: 2px solid #f0f0f0;
+    margin: 10px 0;
+    border: 1px solid #ccc;
     border-radius: 5px;
-    background-color: rgba(255, 255, 255, 0.6); /* Semi-transparent */
-    margin-bottom: 20px;
-    transition: border-color 0.3s;
-}
-
-input:focus {
-    border-color: #ffa500; /* Highlight color on focus */
-    outline: none; /* Remove outline */
+    font-size: 16px;
 }
 
 button {
-    background-color: #ffa500; /* Bright orange */
-    color: #fff; /* White text */
-    border: none;
-    padding: 10px 15px;
-    border-radius: 5px;
+    background-color: #2980b9; /* Blue button color */
+    color: white;
     cursor: pointer;
-    transition: background 0.3s, transform 0.3s;
-    font-size: 1em;
-    width: 100%;
+    transition: background-color 0.3s;
 }
 
 button:hover {
-    background-color: #ff8c00; /* Darker orange on hover */
-    transform: scale(1.05);
+    background-color: #3498db; /* Darker blue on hover */
 }
 
-.select-container {
-    margin-bottom: 20px;
+.distributor-list, .product-list {
+    list-style-type: none;
+    padding: 0;
 }
 
-.footer {
-    margin-top: 20px;
-    color: #ddd; /* Light color for footer */
-    font-size: 0.8em;
+.distributor-item, .product-item {
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.distributor-item:hover, .product-item:hover {
+    background-color: #f1c40f; /* Highlight on hover */
 }
