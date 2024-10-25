@@ -1,138 +1,118 @@
-// Global variables for managing state
-let distributors = {
-    "Mumbai": [
-        { name: "Marico", brands: ["Parachute", "Nihar", "Saffola"] },
-        { name: "Dabur", brands: ["Dabur Amla", "Dabur Honey", "Dabur Gulabari"] },
-    ],
-    "Delhi": [
-        { name: "Colgate-Palmolive", brands: ["Colgate", "Palmolive", "Kissan"] },
-        { name: "ITC", brands: ["Aashirvaad", "Sunfeast", "Fiama"] },
-    ]
+// Product Data
+const productData = {
+    "Hindustan Unilever Limited (HUL)": {
+        "Soaps": ["Lux", "Lifebuoy", "Rin", "Wheel", "Dove", "Pears", "Ciptadent"],
+        "Shampoos": ["Sunsilk", "Clinic Plus", "Pantene", "Head & Shoulders", "TRESemmé"],
+        "Skin care": ["Fair & Lovely", "Ponds", "Lakme", "Vaseline", "Dove"],
+        "Foods": ["Kissan", "Knorr", "Lipton", "Brooke Bond", "Bru"],
+        "Beverages": ["Bru", "Brooke Bond", "Lipton", "Taj Mahal"],
+        "Others": ["Axe", "Closeup", "Pepsodent", "Clear", "Domex"]
+    },
+    "Procter & Gamble India (P&G)": {
+        "Soaps": ["Ariel", "Tide", "Pantene", "Head & Shoulders", "Olay"],
+        "Shampoos": ["Pantene", "Head & Shoulders", "TRESemmé", "Aussie"],
+        "Skin care": ["Olay", "Ponds", "Vaseline", "Gillette"],
+        "Foods": ["Pampers", "Oral-B", "Gillette"],
+        "Beverages": ["Ambi Pur"],
+        "Others": ["Ariel", "Tide", "Whirlpool", "Duracell"]
+    },
+    "Marico Limited": {
+        "Hair care": ["Parachute", "Nihar", "Livon", "Zatak"],
+        "Skin care": ["Nihar", "Parachute", "Livon"],
+        "Foods": ["Saffola", "Coco Soul"],
+        "Others": ["Kaya", "Sundrop", "Revive"]
+    },
+    "Dabur India Limited": {
+        "Hair care": ["Dabur Amla", "Dabur Vatika", "Dabur Almond"],
+        "Skin care": ["Dabur Gulabari", "Dabur Uveda", "Dabur Herbal"],
+        "Foods": ["Dabur Chyawanprash", "Dabur Honey", "Dabur Ghee"],
+        "Beverages": ["Dabur Juices", "Dabur Sharbat"],
+        "Others": ["Dabur Ayurvedic", "Dabur Nature Care"]
+    },
+    "Colgate-Palmolive (India) Limited": {
+        "Oral care": ["Colgate", "Colgate Sensitive", "Colgate Visible White"],
+        "Personal care": ["Palmolive", "Palmolive Men", "Palmolive Women"],
+        "Foods": ["Kissan", "Knorr"],
+        "Others": ["Colgate Toothpowder", "Colgate Toothbrush", "Palmolive Soap"]
+    },
+    "ITC Limited": {
+        "Foods": ["Aashirvaad", "Sunfeast", "Bingo!", "Yippee!"],
+        "Beverages": ["Bru", "Wills", "Gold Flake"],
+        "Personal care": ["Fiama", "Vivel", "Savlon"],
+        "Others": ["ITC Paperboards", "ITC Packaging", "ITC Agri Business"]
+    },
+    "PepsiCo India": {
+        "Beverages": ["Pepsi", "Mirinda", "7 Up", "Mountain Dew"],
+        "Foods": ["Lay's", "Kurkure", "Cheetos", "SunChips"],
+        "Others": ["PepsiCo India Foundation", "PepsiCo Sustainability"]
+    },
+    "Godrej Consumer Products Limited": {
+        "Hair care": ["Godrej Nupur", "Godrej Expert", "Godrej Renew"],
+        "Skin care": ["Godrej No. 1", "Godrej FairGlow", "Godrej Insta Fair"],
+        "Foods": ["Godrej Kitchens", "Godrej Interio"],
+        "Others": ["Godrej Aer", "Godrej Protekt", "Godrej HIT"]
+    }
 };
 
-let products = {
-    "Parachute": ["Hair Oil", "Shampoo"],
-    "Nihar": ["Hair Oil", "Cream"],
-    "Saffola": ["Oats", "Oil"],
-    "Dabur Amla": ["Hair Oil", "Shampoo"],
-    "Dabur Honey": ["Honey", "Ghee"],
-    "Colgate": ["Toothpaste", "Toothbrush"],
-    "Palmolive": ["Shampoo", "Body Wash"],
-    "Aashirvaad": ["Flour", "Salt"],
-    "Sunfeast": ["Biscuits", "Pasta"],
-    "Fiama": ["Body Wash", "Shampoo"],
-};
-
-// Initialize cart
-let cart = [];
-
-// Handle login based on role
-function handleLogin(event) {
-    event.preventDefault();
-    const userRole = document.getElementById('userRole').value;
-    const loginId = document.getElementById('loginId').value;
-
-    if (userRole === 'retailer' && loginId === 'custom1234') {
-        localStorage.setItem('role', 'retailer');
-        window.location.href = 'location.html';
-    } else if (userRole === 'distributor' && loginId === 'distributor1234') {
-        localStorage.setItem('role', 'distributor');
-        window.location.href = 'distributors.html';
+// Event Listeners
+document.getElementById('retailer-login-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+    const retailerId = document.getElementById('retailer-id').value;
+    if (retailerId === 'custom1234') {
+        document.getElementById('location-selection').style.display = 'block';
+        document.getElementById('retailer-login').style.display = 'none';
     } else {
-        alert('Invalid login credentials');
+        alert('Invalid ID. Please try again.');
     }
-}
+});
 
-// Show brands based on selected location
-function showBrands() {
-    const location = document.getElementById('locationSelect').value;
-    const brandList = document.getElementById('brandList');
-    brandList.innerHTML = ""; // Clear previous brands
+document.getElementById('location-select').addEventListener('change', function () {
+    const selectedLocation = this.value;
+    document.getElementById('brand-selection').innerHTML = ''; // Clear previous brands
+    // Dummy data for brand selection based on the location
+    const availableBrands = Object.keys(productData).map(brand => `<option value="${brand}">${brand}</option>`).join('');
+    document.getElementById('brand-selection').innerHTML = availableBrands;
+    document.getElementById('brand-list').style.display = 'block';
+});
 
-    if (distributors[location]) {
-        distributors[location].forEach((distributor) => {
-            distributor.brands.forEach((brand) => {
-                const brandItem = document.createElement('li');
-                brandItem.innerHTML = `<span onclick="showProducts('${distributor.name}', '${brand}')">${brand}</span>`;
-                brandList.appendChild(brandItem);
-            });
-        });
-    } else {
-        brandList.innerHTML = "<li>No brands found for this location.</li>";
-    }
-}
-
-// Function to navigate to the products page
-function showProducts(distributorName, brand) {
-    localStorage.setItem('selectedDistributor', distributorName);
-    localStorage.setItem('selectedBrand', brand);
-    window.location.href = 'products.html'; // Navigate to products page
-}
-
-// Display products for the selected brand
-function displayProducts() {
-    const productList = document.getElementById('productList');
-    const brand = localStorage.getItem('selectedBrand');
-    const distributor = localStorage.getItem('selectedDistributor');
-    
-    const brandProducts = products[brand] || [];
-
-    brandProducts.forEach(product => {
-        const productCard = document.createElement('div');
-        productCard.className = 'product-card';
-        productCard.innerHTML = `
-            <h3>${product} (${brand})</h3>
-            <p>Distributor: ${distributor}</p>
-            <p>Location: ${localStorage.getItem('selectedLocation')}</p>
-            <p>Contact: [Contact Details]</p>
-            <input type="number" placeholder="Quantity" min="1" id="quantity_${product}" />
-            <button onclick="addToCart('${product}', '${brand}', '${distributor}')">Add to Cart</button>
-        `;
-        productList.appendChild(productCard);
+document.getElementById('brand-select').addEventListener('change', function () {
+    const selectedBrand = this.value;
+    const categories = Object.keys(productData[selectedBrand]);
+    let categoryHtml = '<select id="category-select"><option>Select Category</option>';
+    categories.forEach(category => {
+        categoryHtml += `<option value="${category}">${category}</option>`;
     });
+    categoryHtml += '</select>';
+    document.getElementById('category-selection').innerHTML = categoryHtml;
+    document.getElementById('category-selection').style.display = 'block';
+});
+
+document.getElementById('category-selection').addEventListener('change', function () {
+    const selectedCategory = document.getElementById('category-select').value;
+    const selectedBrand = document.getElementById('brand-select').value;
+    const products = productData[selectedBrand][selectedCategory];
+    let productHtml = '<div class="product-card">';
+    products.forEach(product => {
+        productHtml += `
+        <div class="product-item">
+            <h3>${product}</h3>
+            <p>Distributor: Example Distributor</p>
+            <p>Location: Example Location</p>
+            <p>Contact: 1234567890</p>
+            <label for="quantity">Quantity:</label>
+            <input type="number" id="quantity" value="1" min="1">
+            <button class="add-to-cart" onclick="addToCart('${product}')">Add to Cart</button>
+        </div>`;
+    });
+    productHtml += '</div>';
+    document.getElementById('product-details').innerHTML = productHtml;
+    document.getElementById('product-page').style.display = 'block';
+});
+
+// Function to add product to cart
+function addToCart(product) {
+    alert(`${product} has been added to the cart.`);
 }
 
-// Add product to cart
-function addToCart(product, brand, distributor) {
-    const quantityInput = document.getElementById(`quantity_${product}`);
-    const quantity = quantityInput.value ? parseInt(quantityInput.value) : 1;
-
-    const item = cart.find(i => i.product === product && i.brand === brand);
-    if (item) {
-        item.quantity += quantity;
-    } else {
-        cart.push({ product, brand, distributor, quantity });
-    }
-    alert(`Added ${quantity} ${product} (${brand}) to cart. Total items in cart: ${cart.length}`);
-    speakOut(`Added ${quantity} ${product} (${brand}) to cart.`);
-}
-
-// Function to speak out the message
-function speakOut(message) {
-    const utterance = new SpeechSynthesisUtterance(message);
-    speechSynthesis.speak(utterance);
-}
-
-// Initialization functions for page load
-function initializeLocationPage() {
-    const locationSelect = document.getElementById('locationSelect');
-    locationSelect.onchange = showBrands;
-}
-
-function initializeDistributorsPage() {
-    // Add any necessary initialization for distributors page here
-    showDistributors();
-}
-
-function initializeProductsPage() {
-    displayProducts();
-}
-
-// Call initialization functions based on page
-window.onload = function() {
-    if (document.getElementById('locationSelect')) {
-        initializeLocationPage();
-    } else if (document.getElementById('productList')) {
-        initializeProductsPage();
-    }
-};
+// Adding background image to the body
+document.body.style.backgroundImage = "url('background.jpg')";
