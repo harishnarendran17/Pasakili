@@ -89,7 +89,7 @@ function showDistributors() {
     const location = document.getElementById('locationSelect').value;
     const distributorList = document.getElementById('distributorList');
     const brandList = document.getElementById('brandList');
-    
+
     distributorList.innerHTML = ""; // Clear distributor list
     brandList.innerHTML = ""; // Clear brand list
 
@@ -98,27 +98,16 @@ function showDistributors() {
             const distributorItem = document.createElement('li');
             distributorItem.className = 'distributor-item';
             distributorItem.innerHTML = `
-                <span>${distributor.name} - Brands: ${distributor.brands.length}</span>
+                <span>${distributor.name}</span>
+                <ul>
+                    ${distributor.brands.map(brand => `<li onclick="showProducts('${brand}')">${brand}</li>`).join('')}
+                </ul>
             `;
-            distributorItem.onclick = () => showBrands(distributor.brands);
             distributorList.appendChild(distributorItem);
         });
     } else {
         distributorList.innerHTML = "<li>No distributors available</li>";
     }
-}
-
-// Show brands based on selected distributor
-function showBrands(brands) {
-    const brandList = document.getElementById('brandList');
-    brandList.innerHTML = ""; // Clear brand list
-
-    brands.forEach((brand) => {
-        const brandItem = document.createElement('li');
-        brandItem.textContent = brand;
-        brandItem.onclick = () => showProducts(brand); // Show products for selected brand
-        brandList.appendChild(brandItem);
-    });
 }
 
 // Show products for the selected brand
