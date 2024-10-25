@@ -7,13 +7,19 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body onload="initializeLocationPage()">
-    <div class="container">
-        <h2>Select Your Location</h2>
-        <select id="locationSelect">
-            <option value="Mumbai">Mumbai</option>
-            <option value="Delhi">Delhi</option>
-        </select>
-        <ul id="distributorList"></ul>
+    <div class="flex-container">
+        <div class="location-section">
+            <h2>Select Your Location</h2>
+            <select id="locationSelect" onchange="showDistributors()">
+                <option value="Mumbai">Mumbai</option>
+                <option value="Delhi">Delhi</option>
+            </select>
+            <ul id="distributorList"></ul>
+        </div>
+        <div class="distributor-details">
+            <h2>Distributor Details</h2>
+            <ul id="distributorDetailsList"></ul>
+        </div>
     </div>
     <script src="script.js"></script>
 </body>
