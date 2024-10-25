@@ -3,16 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Products</title>
     <link rel="stylesheet" href="style.css">
+    <title>Products</title>
 </head>
 <body>
     <div class="container">
-        <h1>Products</h1>
-        <div id="productList"></div>
-        <div id="cartMessage" style="color: green;"></div>
-        <button id="backToDistributorButton">Back to Distributors</button>
+        <h1>Available Products</h1>
+        <ul id="productList"></ul>
     </div>
-    <script src="script.js"></script>
+    <script src="script.js" onload="showProducts()"></script>
 </body>
 </html>
