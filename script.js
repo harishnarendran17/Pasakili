@@ -104,6 +104,12 @@ function showProducts(distributor) {
     const productList = document.getElementById('productList');
     productList.innerHTML = ""; // Clear list
 
+    // Check if the product list exists
+    if (!productList) {
+        console.error('productList element is null');
+        return;
+    }
+
     distributor.brands.forEach((brand) => {
         const productItem = document.createElement('li');
         productItem.className = 'product-item';
@@ -127,3 +133,14 @@ function displayProductDetails(brand) {
 function initializeProductsPage() {
     // You can add code here to fetch data dynamically if needed
 }
+
+// Ensure the script runs after the DOM has fully loaded
+document.addEventListener('DOMContentLoaded', () => {
+    if (window.location.pathname.includes('location.html')) {
+        document.getElementById('locationSelect').addEventListener('change', showDistributors);
+    }
+    
+    if (window.location.pathname.includes('products.html')) {
+        initializeProductsPage();
+    }
+});
