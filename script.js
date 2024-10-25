@@ -89,54 +89,41 @@ function showDistributors() {
             const distributorItem = document.createElement('li');
             distributorItem.className = 'distributor-item';
             distributorItem.innerHTML = `
-                <span>${distributor.name} - Brands: ${distributor.brands.join(', ')}</span>
+                <span>${distributor.name} - Brands: ${distributor.brands.length}</span>
             `;
-            distributorItem.onclick = () => {
-                // Store selected distributor
-                localStorage.setItem('selectedDistributor', JSON.stringify(distributor));
-                // Redirect to products page
-                window.location.href = 'products.html'; 
-            };
+            distributorItem.onclick = () => showProducts(distributor);
             distributorList.appendChild(distributorItem);
         });
     } else {
-        distributorList.innerHTML = "<li>No distributors found for this location.</li>";
+        distributorList.innerHTML = "<li>No distributors available</li>";
     }
 }
 
-// Show products for a selected distributor's brands
-function initializeProductsPage() {
-    const distributor = JSON.parse(localStorage.getItem('selectedDistributor'));
+// Show products based on distributor
+function showProducts(distributor) {
     const productList = document.getElementById('productList');
-    productList.innerHTML = ""; // Clear previous products
+    productList.innerHTML = ""; // Clear list
 
-    if (distributor) {
-        distributor.brands.forEach((brand) => {
-            const productInfo = products[brand];
-            if (productInfo) {
-                const productItem = document.createElement('li');
-                productItem.className = 'product-item';
-                productItem.innerHTML = `
-                    <div>
-                        <strong>${productInfo.name}</strong> from <strong>${productInfo.distributor}</strong>
-                        <p>Contact: ${productInfo.contact}</p>
-                        <p>Location: ${productInfo.location}</p>
-                        <input type="number" min="1" value="1" id="quantity_${productInfo.name}">
-                        <button onclick="addToCart('${productInfo.name}')">Add to Cart</button>
-                    </div>
-                `;
-                productList.appendChild(productItem);
-            }
-        });
+    distributor.brands.forEach((brand) => {
+        const productItem = document.createElement('li');
+        productItem.className = 'product-item';
+        productItem.innerHTML = brand; // Display brand name
+        productItem.onclick = () => displayProductDetails(brand);
+        productList.appendChild(productItem);
+    });
+}
+
+// Display product details
+function displayProductDetails(brand) {
+    const product = products[brand];
+    if (product) {
+        alert(`Name: ${product.name}\nDistributor: ${product.distributor}\nContact: ${product.contact}\nLocation: ${product.location}`);
+    } else {
+        alert('Product not found');
     }
 }
 
-// Function to add items to the cart with voice alert
-function addToCart(product) {
-    const quantity = document.getElementById(`quantity_${product}`).value;
-    alert(`Added ${quantity} of ${product} to cart`);
-    
-    // Voice alert
-    const utterance = new SpeechSynthesisUtterance(`Added ${quantity} of ${product} to cart`);
-    window.speechSynthesis.speak(utterance);
+// Initialize products page (can be extended later)
+function initializeProductsPage() {
+    // You can add code here to fetch data dynamically if needed
 }
