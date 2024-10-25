@@ -1,24 +1,24 @@
 // Global variables for managing state
 let distributors = {
     "Mumbai": [
-        { name: "Marico", brands: ["Parachute", "Nihar", "Saffola"] },
-        { name: "Dabur", brands: ["Dabur Amla", "Dabur Honey", "Dabur Gulabari"] },
+        { name: "Distributor 1", brands: ["Parachute", "Saffola"] },
+        { name: "Distributor 2", brands: ["Dabur Amla", "Dabur Honey"] },
     ],
     "Delhi": [
-        { name: "Colgate-Palmolive", brands: ["Colgate", "Palmolive", "Kissan"] },
-        { name: "ITC", brands: ["Aashirvaad", "Sunfeast", "Fiama"] },
+        { name: "Distributor 1", brands: ["Colgate", "Palmolive"] },
+        { name: "Distributor 2", brands: ["Aashirvaad", "Sunfeast"] },
     ]
 };
 
 let products = {
     "Parachute": ["Hair Oil", "Shampoo"],
-    "Nihar": ["Hair Oil", "Cream"],
     "Saffola": ["Oats", "Oil"],
     "Dabur Amla": ["Hair Oil", "Shampoo"],
     "Dabur Honey": ["Honey", "Ghee"],
     "Colgate": ["Toothpaste", "Toothbrush"],
     "Palmolive": ["Shampoo", "Body Wash"],
-    "Aashirvaad": ["Flour", "Salt"]
+    "Aashirvaad": ["Flour", "Salt"],
+    "Sunfeast": ["Biscuits", "Noodles"]
 };
 
 let cart = [];
@@ -31,10 +31,10 @@ function handleLogin(event) {
     
     if (userRole === 'retailer' && loginId === '1234') {
         localStorage.setItem('role', 'retailer');
-        window.location.href = 'location.html'; // Redirect to location selection
+        window.location.href = 'location.html';
     } else if (userRole === 'distributor' && loginId === 'distributor1234') {
         localStorage.setItem('role', 'distributor');
-        window.location.href = 'distributors.html'; // Redirect to distributors page
+        window.location.href = 'distributors.html';
     } else {
         alert('Invalid login credentials');
     }
@@ -44,10 +44,7 @@ function handleLogin(event) {
 function showDistributors() {
     const location = document.getElementById('locationSelect').value;
     const distributorList = document.getElementById('distributorList');
-    const distributorDetailsList = document.getElementById('distributorDetailsList');
-    
     distributorList.innerHTML = ""; // Clear list
-    distributorDetailsList.innerHTML = ""; // Clear distributor details
     
     if (distributors[location]) {
         distributors[location].forEach((distributor) => {
@@ -58,15 +55,14 @@ function showDistributors() {
             `;
             distributorItem.onclick = () => showProducts(distributor);
             distributorList.appendChild(distributorItem);
-
-            // Add to distributor details
-            const detailItem = document.createElement('li');
-            detailItem.innerHTML = `${distributor.name}: ${distributor.brands.join(", ")}`;
-            distributorDetailsList.appendChild(detailItem);
         });
     } else {
         distributorList.innerHTML = "<li>No distributors found for this location.</li>";
     }
+
+    // Animate distributor list to slide in
+    distributorList.style.transition = 'transform 0.5s ease';
+    distributorList.style.transform = 'translateX(0)';
 }
 
 // Show products for a selected brand
@@ -100,29 +96,10 @@ function addToCart(product, brand) {
     alert(`Added ${product} (${brand}) to cart. Total items in cart: ${cart.length}`);
 }
 
-// Display cart
-function showCart() {
-    const cartList = document.getElementById('cartList');
-    cartList.innerHTML = ""; // Clear cart list
-    
-    if (cart.length > 0) {
-        cart.forEach(item => {
-            const cartItem = document.createElement('li');
-            cartItem.className = 'cart-item';
-            cartItem.innerHTML = `
-                <span>${item.product} (${item.brand}) - Quantity: ${item.quantity}</span>
-            `;
-            cartList.appendChild(cartItem);
-        });
-    } else {
-        cartList.innerHTML = "<li>Your cart is empty.</li>";
-    }
-}
-
 // Initialization functions for page load
 function initializeLocationPage() {
     const locationSelect = document.getElementById('locationSelect');
-    showDistributors(); // Populate distributors on page load
+    locationSelect.onchange = showDistributors;
 }
 
 function initializeDistributorsPage() {
