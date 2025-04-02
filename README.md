@@ -34,15 +34,29 @@ ExtractedCIDRs AS (
     SELECT f.cidr
     FROM FilteredCIDRs f
     WHERE f.cidr LIKE '%/31'
-    AND NOT EXISTS (  -- Exclude /32 if /31 exists in Assignment
+    AND NOT EXISTS (  -- Exclude /32 if a matching /31 exists
         SELECT 1 
-        FROM AssignmentCIDRs a
-        WHERE a.cidr LIKE '%/32' 
-        AND a.head_int BETWEEN f.head_int AND f.head_int + 1
+        FROM FilteredCIDRs f32
+        WHERE f32.cidr LIKE '%/32' 
+        AND f32.head_int BETWEEN f.head_int AND f.head_int + 1
+    )
+),
+
+Unique32CIDRs AS (
+    SELECT f32.cidr
+    FROM FilteredCIDRs f32
+    WHERE f32.cidr LIKE '%/32'
+    AND NOT EXISTS (  -- Only include /32 if no matching /31 exists
+        SELECT 1
+        FROM FilteredCIDRs f31
+        WHERE f31.cidr LIKE '%/31'
+        AND f32.head_int BETWEEN f31.head_int AND f31.head_int + 1
     )
 )
 
 SELECT cidr FROM FilteredCIDRs
-WHERE cidr NOT LIKE '%/32'  -- Remove /32 CIDRs first
+WHERE cidr NOT LIKE '%/32' AND cidr NOT LIKE '%/31'  -- Keep everything except /31 and /32 for separate handling
 UNION ALL
-SELECT * FROM ExtractedCIDRs;
+SELECT * FROM ExtractedCIDRs  -- Include valid /31 CIDRs
+UNION ALL
+SELECT * FROM Unique32CIDRs;  -- Include /32 CIDRs that don’t have a matching /31
