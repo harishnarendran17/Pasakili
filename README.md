@@ -26,24 +26,24 @@ BackboneCIDRs AS (
 ),
 
 FilteredCIDRs AS (
-    SELECT cidr FROM AssignmentCIDRs
+    SELECT cidr, head_int FROM AssignmentCIDRs
     UNION ALL
-    SELECT cidr FROM BackboneCIDRs
+    SELECT cidr, head AS head_int FROM BackboneCIDRs
 ),
 
 ExtractedCIDRs AS (
-    SELECT cidr
-    FROM FilteredCIDRs m31
-    WHERE cidr LIKE '%/31'
+    SELECT f.cidr
+    FROM FilteredCIDRs f
+    WHERE f.cidr LIKE '%/31'
     AND NOT EXISTS (  -- Exclude /32 if /31 exists in Assignment
         SELECT 1 
-        FROM AssignmentCIDRs m32 
-        WHERE m32.cidr LIKE '%/32' 
-        AND m32.head_int BETWEEN m31.head_int AND m31.head_int + 1
+        FROM AssignmentCIDRs a
+        WHERE a.cidr LIKE '%/32' 
+        AND a.head_int BETWEEN f.head_int AND f.head_int + 1
     )
 )
 
-SELECT * FROM FilteredCIDRs
+SELECT cidr FROM FilteredCIDRs
 WHERE cidr NOT LIKE '%/32'  -- Remove /32 CIDRs first
 UNION ALL
 SELECT * FROM ExtractedCIDRs;
