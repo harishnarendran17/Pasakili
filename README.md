@@ -4,6 +4,7 @@ WITH SubnetBoundaries AS (
     FROM ng_inam.subnet
     WHERE cidr = :cidr
 ),
+
 AssignmentCIDRs AS (
     SELECT DISTINCT a.cidr, a.head_int
     FROM ng_inam.assignment a
@@ -11,34 +12,38 @@ AssignmentCIDRs AS (
         ON a.head_int BETWEEN sb.head_int AND sb.tail_int
         AND a.tail_int BETWEEN sb.head_int AND sb.tail_int
 ),
+
 BackboneCIDRs AS (
-    SELECT DISTINCT i.cidr, i.head_int
+    SELECT DISTINCT i.cidr, i.head
     FROM ng_inam.ip_audit_backbone_config_feed i
     JOIN SubnetBoundaries sb 
-        ON i.head_int BETWEEN sb.head_int AND sb.tail_int
-        AND i.tail_int BETWEEN sb.head_int AND sb.tail_int
+        ON i.head BETWEEN sb.head_int AND sb.tail_int
+        AND i.tail BETWEEN sb.head_int AND sb.tail_int
     WHERE NOT EXISTS (  -- Ignore Backbone CIDRs if they exist in Assignment
         SELECT 1 FROM AssignmentCIDRs a
-        WHERE a.head_int = i.head_int
+        WHERE a.head_int = i.head
     )
 ),
+
 FilteredCIDRs AS (
     SELECT cidr FROM AssignmentCIDRs
     UNION ALL
     SELECT cidr FROM BackboneCIDRs
 ),
+
 ExtractedCIDRs AS (
     SELECT cidr
     FROM FilteredCIDRs m31
     WHERE cidr LIKE '%/31'
-    AND NOT EXISTS (  -- Ignore /31 if a corresponding /32 exists
+    AND NOT EXISTS (  -- Exclude /32 if /31 exists in Assignment
         SELECT 1 
-        FROM FilteredCIDRs m32 
+        FROM AssignmentCIDRs m32 
         WHERE m32.cidr LIKE '%/32' 
         AND m32.head_int BETWEEN m31.head_int AND m31.head_int + 1
     )
 )
+
 SELECT * FROM FilteredCIDRs
-WHERE cidr NOT LIKE '%/31'  -- Exclude /31 CIDRs initially
+WHERE cidr NOT LIKE '%/32'  -- Remove /32 CIDRs first
 UNION ALL
 SELECT * FROM ExtractedCIDRs;
