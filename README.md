@@ -1,6 +1,5 @@
 WITH SubnetBoundaries AS (
-    SELECT 
-        head_int, tail_int
+    SELECT head_int, tail_int
     FROM ng_inam.subnet
     WHERE cidr = :cidr
 ),
