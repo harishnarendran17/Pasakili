@@ -5,7 +5,7 @@ WITH SubnetBoundaries AS (
 ),
 
 AssignmentCIDRs AS (
-    SELECT DISTINCT a.cidr, a.head_int
+    SELECT DISTINCT a.cidr, a.head_int, a.hold_until
     FROM ng_inam.assignment a
     JOIN SubnetBoundaries sb 
         ON a.head_int BETWEEN sb.head_int AND sb.tail_int
@@ -13,14 +13,14 @@ AssignmentCIDRs AS (
 ),
 
 BackboneCIDRs AS (
-    SELECT DISTINCT b.cidr, b.head
+    SELECT DISTINCT b.cidr, b.head, NULL AS hold_until
     FROM ng_inam.ip_audit_backbone_config_feed b
     JOIN SubnetBoundaries sb 
         ON b.head BETWEEN sb.head_int AND sb.tail_int
 ),
 
 FilteredBackboneCIDRs AS (
-    SELECT b.cidr, b.head
+    SELECT b.cidr, b.head, b.hold_until
     FROM BackboneCIDRs b
     WHERE NOT EXISTS (
         SELECT 1
@@ -31,6 +31,6 @@ FilteredBackboneCIDRs AS (
     )
 )
 
-SELECT cidr FROM AssignmentCIDRs
+SELECT cidr, hold_until FROM AssignmentCIDRs
 UNION ALL
-SELECT cidr FROM FilteredBackboneCIDRs;
+SELECT cidr, hold_until FROM FilteredBackboneCIDRs;
